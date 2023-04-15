@@ -1,0 +1,47 @@
+	/**
+	 * Registers the service provider with a DI container.
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  void
+	 * @since 3.2.0
+	 */
+	public function register(Container $container)
+	{
+		$container->alias(Load::class, 'Load.Model')
+			->share('Load.Model', [$this, 'getModelLoad'], true);
+		$container->alias(Insert::class, 'Insert.Model')
+			->share('Insert.Model', [$this, 'getModelInsert'], true);
+	}
+
+	/**
+	 * Get the Load Model
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Load
+	 * @since 3.2.0
+	 */
+	public function getModelLoad(Container $container): Load
+	{
+		return new Load(
+			$container->get('Config'),
+			$container->get('Table')
+		);
+	}
+
+	/**
+	 * Get the Insert Model
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Insert
+	 * @since 3.2.0
+	 */
+	public function getModelInsert(Container $container): Insert
+	{
+		return new Insert(
+			$container->get('Config'),
+			$container->get('Table')
+		);
+	}

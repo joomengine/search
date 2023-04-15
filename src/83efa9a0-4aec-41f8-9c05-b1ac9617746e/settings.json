@@ -1,0 +1,33 @@
+{
+    "add_head": "0",
+    "add_licensing_template": "2",
+    "extends": "8f9449fc-bfbc-49a5-b146-d58c8c17dfdf",
+    "guid": "83efa9a0-4aec-41f8-9c05-b1ac9617746e",
+    "implements": [
+        "117d8c9e-3f8d-40ae-b375-1efa2fe5538a"
+    ],
+    "load_selection": null,
+    "name": "Regex",
+    "power_version": "1.0.0",
+    "system_name": "JCB.Search.Engine.Regex",
+    "type": "class",
+    "use_selection": {
+        "use_selection0": {
+            "use": "6e2ca779-f70e-4871-a138-0ee5eaec6a97",
+            "as": "default"
+        },
+        "use_selection1": {
+            "use": "1f28cb53-60d9-4db1-b517-3c7dc6b429ef",
+            "as": "default"
+        },
+        "use_selection2": {
+            "use": "0a59c65c-9daf-4bc9-baf4-e063ff9e6a8a",
+            "as": "default"
+        }
+    },
+    "namespace": "VDM\\Joomla\\Componentbuilder.Search.Engine.Regex",
+    "description": "Search Type Regex\r\n\r\n@since 3.2.0",
+    "licensing_template": "\/**\r\n * @package    Joomla.Component.Builder\r\n *\r\n * @created    4th September, 2022\r\n * @author     Llewellyn van der Merwe <https:\/\/dev.vdm.io>\r\n * @git        Joomla Component Builder <https:\/\/git.vdm.dev\/joomla\/Component-Builder>\r\n * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.\r\n * @license    GNU General Public License version 2 or later; see LICENSE.txt\r\n *\/\r\n",
+    "head": "",
+    "composer": ""
+}

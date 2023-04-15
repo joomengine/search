@@ -1,0 +1,37 @@
+{
+    "add_head": "1",
+    "add_licensing_template": "2",
+    "extends": "0",
+    "guid": "01a89ba8-f8bb-435c-93de-0a8f3fa9432a",
+    "implements": [
+        "caf33c5d-858c-4f9a-894f-ab302ec5445a"
+    ],
+    "load_selection": null,
+    "name": "Factory",
+    "power_version": "1.0.0",
+    "system_name": "JCB.Search.Factory",
+    "type": "abstract class",
+    "use_selection": {
+        "use_selection0": {
+            "use": "da714ea5-96bb-4eb1-959b-39b457be9cd1",
+            "as": "default"
+        },
+        "use_selection1": {
+            "use": "7f40cc7d-9ab8-4601-8a2b-4eb3d712a40a",
+            "as": "default"
+        },
+        "use_selection2": {
+            "use": "d5de47ce-9a9e-4e76-a5c6-61ed74842ea3",
+            "as": "default"
+        },
+        "use_selection3": {
+            "use": "cc6972a7-1574-4ae0-92a8-7f1012aac6f7",
+            "as": "default"
+        }
+    },
+    "namespace": "VDM\\Joomla\\Componentbuilder.Search.Factory",
+    "description": "Search Factory\r\n\r\n@since 3.2.0",
+    "licensing_template": "\/**\r\n * @package    Joomla.Component.Builder\r\n *\r\n * @created    4th September, 2022\r\n * @author     Llewellyn van der Merwe <https:\/\/dev.vdm.io>\r\n * @git        Joomla Component Builder <https:\/\/git.vdm.dev\/joomla\/Component-Builder>\r\n * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.\r\n * @license    GNU General Public License version 2 or later; see LICENSE.txt\r\n *\/\r\n",
+    "head": "use Joomla\\DI\\Container;",
+    "composer": ""
+}

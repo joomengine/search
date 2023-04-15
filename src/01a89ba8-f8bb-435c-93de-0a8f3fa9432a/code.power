@@ -1,0 +1,51 @@
+	/**
+	 * Global Search Container
+	 *
+	 * @var     Container
+	 * @since 3.2.0
+	 **/
+	protected static $container = null;
+
+	/**
+	 * Get any class from the search container
+	 *
+	 * @param   string  $key  The container class key
+	 *
+	 * @return  Mixed
+	 * @since 3.2.0
+	 */
+	public static function _(string $key)
+	{
+		return self::getContainer()->get($key);
+	}
+
+	/**
+	 * Get the global search container
+	 *
+	 * @return  Container
+	 * @since 3.2.0
+	 */
+	public static function getContainer(): Container
+	{
+		if (!self::$container)
+		{
+			self::$container = self::createContainer();
+		}
+
+		return self::$container;
+	}
+
+	/**
+	 * Create a container object
+	 *
+	 * @return  Container
+	 * @since 3.2.0
+	 */
+	protected static function createContainer(): Container
+	{
+		return (new Container())
+			->registerServiceProvider(new Search())
+			->registerServiceProvider(new Model())
+			->registerServiceProvider(new Database())
+			->registerServiceProvider(new Agent());
+	}

@@ -1,0 +1,42 @@
+{
+    "add_head": "1",
+    "add_licensing_template": "2",
+    "extends": "0",
+    "guid": "cc6972a7-1574-4ae0-92a8-7f1012aac6f7",
+    "implements": [
+        "-1"
+    ],
+    "load_selection": null,
+    "name": "Agent",
+    "power_version": "1.0.0",
+    "system_name": "JCB.Search.Service.Agent",
+    "type": "class",
+    "use_selection": {
+        "use_selection0": {
+            "use": "0b658434-3767-401e-addc-eabfd1d0e94a",
+            "as": "SearchAgent"
+        },
+        "use_selection1": {
+            "use": "15d9e1a9-3364-4d69-9d9f-9b87db820e5c",
+            "as": "default"
+        },
+        "use_selection2": {
+            "use": "abc37ddd-1ff5-4204-9e5b-015ab4f3d4c7",
+            "as": "default"
+        },
+        "use_selection3": {
+            "use": "e544a248-4b6a-46cb-9926-a3ac9937807c",
+            "as": "default"
+        },
+        "use_selection4": {
+            "use": "3ac29912-0681-4ca9-8197-d5a8f6a49ac7",
+            "as": "default"
+        }
+    },
+    "namespace": "VDM\\Joomla\\Componentbuilder.Search.Service.Agent",
+    "description": "Agent Service Provider\r\n\r\n@since 3.2.0",
+    "implements_custom": "ServiceProviderInterface",
+    "licensing_template": "\/**\r\n * @package    Joomla.Component.Builder\r\n *\r\n * @created    4th September, 2022\r\n * @author     Llewellyn van der Merwe <https:\/\/dev.vdm.io>\r\n * @git        Joomla Component Builder <https:\/\/git.vdm.dev\/joomla\/Component-Builder>\r\n * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.\r\n * @license    GNU General Public License version 2 or later; see LICENSE.txt\r\n *\/\r\n",
+    "head": "use Joomla\\DI\\Container;\r\nuse Joomla\\DI\\ServiceProviderInterface;",
+    "composer": ""
+}

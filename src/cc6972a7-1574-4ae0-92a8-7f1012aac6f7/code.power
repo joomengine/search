@@ -1,0 +1,110 @@
+	/**
+	 * Registers the service provider with a DI container.
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  void
+	 * @since 3.2.0
+	 */
+	public function register(Container $container)
+	{
+		$container->alias(SearchAgent::class, 'Agent')
+			->share('Agent', [$this, 'getAgent'], true);
+
+		$container->alias(Find::class, 'Agent.Find')
+			->share('Agent.Find', [$this, 'getFind'], true);
+
+		$container->alias(Replace::class, 'Agent.Replace')
+			->share('Agent.Replace', [$this, 'getReplace'], true);
+
+		$container->alias(Search::class, 'Agent.Search')
+			->share('Agent.Search', [$this, 'getSearch'], true);
+
+		$container->alias(Update::class, 'Agent.Update')
+			->share('Agent.Update', [$this, 'getUpdate'], true);
+	}
+
+	/**
+	 * Get the Search Agent
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  SearchAgent
+	 * @since 3.2.0
+	 */
+	public function getAgent(Container $container): SearchAgent
+	{
+		return new SearchAgent(
+			$container->get('Config'),
+			$container->get('Load.Database'),
+			$container->get('Insert.Database'),
+			$container->get('Agent.Find'),
+			$container->get('Agent.Replace'),
+			$container->get('Agent.Search'),
+			$container->get('Agent.Update'),
+			$container->get('Table')
+		);
+	}
+
+	/**
+	 * Get the Search Agent Find
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Find
+	 * @since 3.2.0
+	 */
+	public function getFind(Container $container): Find
+	{
+		return new Find(
+			$container->get('Config'),
+			$container->get('Agent.Search')
+		);
+	}
+
+	/**
+	 * Get the Search Agent Replace
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Replace
+	 * @since 3.2.0
+	 */
+	public function getReplace(Container $container): Replace
+	{
+		return new Replace(
+			$container->get('Config'),
+			$container->get('Agent.Update')
+		);
+	}
+
+	/**
+	 * Get the Search Agent Search
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Search
+	 * @since 3.2.0
+	 */
+	public function getSearch(Container $container): Search
+	{
+		return new Search(
+			$container->get('Config'),
+			$container->get('Search')
+		);
+	}
+
+	/**
+	 * Get the Search Agent Update
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Update
+	 * @since 3.2.0
+	 */
+	public function getUpdate(Container $container): Update
+	{
+		return new Update(
+			$container->get('Search')
+		);
+	}
