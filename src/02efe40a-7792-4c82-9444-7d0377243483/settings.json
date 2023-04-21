@@ -23,6 +23,10 @@
         "use_selection2": {
             "use": "6e2ca779-f70e-4871-a138-0ee5eaec6a97",
             "as": "default"
+        },
+        "use_selection3": {
+            "use": "0a59c65c-9daf-4bc9-baf4-e063ff9e6a8a",
+            "as": "default"
         }
     },
     "namespace": "VDM\\Joomla\\Componentbuilder.Search.Model.Insert",
