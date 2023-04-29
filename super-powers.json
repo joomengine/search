@@ -238,5 +238,15 @@
         "settings": "src\/01a89ba8-f8bb-435c-93de-0a8f3fa9432a\/settings.json",
         "path": "src\/01a89ba8-f8bb-435c-93de-0a8f3fa9432a",
         "guid": "01a89ba8-f8bb-435c-93de-0a8f3fa9432a"
+    },
+    "7179fde6-1e51-4b51-8545-7ca18f74a0f4": {
+        "name": "UpdateInterface",
+        "type": "interface",
+        "namespace": "VDM\\Joomla\\Componentbuilder\\Interfaces",
+        "code": "src\/7179fde6-1e51-4b51-8545-7ca18f74a0f4\/code.php",
+        "power": "src\/7179fde6-1e51-4b51-8545-7ca18f74a0f4\/code.power",
+        "settings": "src\/7179fde6-1e51-4b51-8545-7ca18f74a0f4\/settings.json",
+        "path": "src\/7179fde6-1e51-4b51-8545-7ca18f74a0f4",
+        "guid": "7179fde6-1e51-4b51-8545-7ca18f74a0f4"
     }
 }
