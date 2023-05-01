@@ -7,7 +7,7 @@
         "power": "src\/6e2ca779-f70e-4871-a138-0ee5eaec6a97\/code.power",
         "settings": "src\/6e2ca779-f70e-4871-a138-0ee5eaec6a97\/settings.json",
         "path": "src\/6e2ca779-f70e-4871-a138-0ee5eaec6a97",
-        "spk": "Config",
+        "spk": "Super__6e2ca779_f70e_4871_a138_0ee5eaec6a97__Power",
         "guid": "6e2ca779-f70e-4871-a138-0ee5eaec6a97"
     },
     "117d8c9e-3f8d-40ae-b375-1efa2fe5538a": {
@@ -18,7 +18,7 @@
         "power": "src\/117d8c9e-3f8d-40ae-b375-1efa2fe5538a\/code.power",
         "settings": "src\/117d8c9e-3f8d-40ae-b375-1efa2fe5538a\/settings.json",
         "path": "src\/117d8c9e-3f8d-40ae-b375-1efa2fe5538a",
-        "spk": "Super___117d8c9e_3f8d_40ae_b375_1efa2fe5538a___Power",
+        "spk": "Super__117d8c9e_3f8d_40ae_b375_1efa2fe5538a__Power",
         "guid": "117d8c9e-3f8d-40ae-b375-1efa2fe5538a"
     },
     "8f9449fc-bfbc-49a5-b146-d58c8c17dfdf": {
@@ -29,7 +29,7 @@
         "power": "src\/8f9449fc-bfbc-49a5-b146-d58c8c17dfdf\/code.power",
         "settings": "src\/8f9449fc-bfbc-49a5-b146-d58c8c17dfdf\/settings.json",
         "path": "src\/8f9449fc-bfbc-49a5-b146-d58c8c17dfdf",
-        "spk": "Engine",
+        "spk": "Super__8f9449fc_bfbc_49a5_b146_d58c8c17dfdf__Power",
         "guid": "8f9449fc-bfbc-49a5-b146-d58c8c17dfdf"
     },
     "83efa9a0-4aec-41f8-9c05-b1ac9617746e": {
@@ -40,7 +40,7 @@
         "power": "src\/83efa9a0-4aec-41f8-9c05-b1ac9617746e\/code.power",
         "settings": "src\/83efa9a0-4aec-41f8-9c05-b1ac9617746e\/settings.json",
         "path": "src\/83efa9a0-4aec-41f8-9c05-b1ac9617746e",
-        "spk": "Regex",
+        "spk": "Super__83efa9a0_4aec_41f8_9c05_b1ac9617746e__Power",
         "guid": "83efa9a0-4aec-41f8-9c05-b1ac9617746e"
     },
     "db093eca-63b3-4d6c-9232-3ceb058121c0": {
@@ -51,7 +51,7 @@
         "power": "src\/db093eca-63b3-4d6c-9232-3ceb058121c0\/code.power",
         "settings": "src\/db093eca-63b3-4d6c-9232-3ceb058121c0\/settings.json",
         "path": "src\/db093eca-63b3-4d6c-9232-3ceb058121c0",
-        "spk": "Basic",
+        "spk": "Super__db093eca_63b3_4d6c_9232_3ceb058121c0__Power",
         "guid": "db093eca-63b3-4d6c-9232-3ceb058121c0"
     },
     "da714ea5-96bb-4eb1-959b-39b457be9cd1": {
@@ -62,7 +62,7 @@
         "power": "src\/da714ea5-96bb-4eb1-959b-39b457be9cd1\/code.power",
         "settings": "src\/da714ea5-96bb-4eb1-959b-39b457be9cd1\/settings.json",
         "path": "src\/da714ea5-96bb-4eb1-959b-39b457be9cd1",
-        "spk": "Search",
+        "spk": "Super__da714ea5_96bb_4eb1_959b_39b457be9cd1__Power",
         "guid": "da714ea5-96bb-4eb1-959b-39b457be9cd1"
     },
     "f523ab49-907a-4356-b064-51c85a187fbd": {
@@ -73,7 +73,7 @@
         "power": "src\/f523ab49-907a-4356-b064-51c85a187fbd\/code.power",
         "settings": "src\/f523ab49-907a-4356-b064-51c85a187fbd\/settings.json",
         "path": "src\/f523ab49-907a-4356-b064-51c85a187fbd",
-        "spk": "Load",
+        "spk": "Super__f523ab49_907a_4356_b064_51c85a187fbd__Power",
         "guid": "f523ab49-907a-4356-b064-51c85a187fbd"
     },
     "02efe40a-7792-4c82-9444-7d0377243483": {
@@ -84,7 +84,7 @@
         "power": "src\/02efe40a-7792-4c82-9444-7d0377243483\/code.power",
         "settings": "src\/02efe40a-7792-4c82-9444-7d0377243483\/settings.json",
         "path": "src\/02efe40a-7792-4c82-9444-7d0377243483",
-        "spk": "Insert",
+        "spk": "Super__02efe40a_7792_4c82_9444_7d0377243483__Power",
         "guid": "02efe40a-7792-4c82-9444-7d0377243483"
     },
     "7f40cc7d-9ab8-4601-8a2b-4eb3d712a40a": {
@@ -95,7 +95,7 @@
         "power": "src\/7f40cc7d-9ab8-4601-8a2b-4eb3d712a40a\/code.power",
         "settings": "src\/7f40cc7d-9ab8-4601-8a2b-4eb3d712a40a\/settings.json",
         "path": "src\/7f40cc7d-9ab8-4601-8a2b-4eb3d712a40a",
-        "spk": "Model",
+        "spk": "Super__7f40cc7d_9ab8_4601_8a2b_4eb3d712a40a__Power",
         "guid": "7f40cc7d-9ab8-4601-8a2b-4eb3d712a40a"
     },
     "2bd1a32c-3d90-4646-9314-28d44d164f76": {
@@ -106,7 +106,7 @@
         "power": "src\/2bd1a32c-3d90-4646-9314-28d44d164f76\/code.power",
         "settings": "src\/2bd1a32c-3d90-4646-9314-28d44d164f76\/settings.json",
         "path": "src\/2bd1a32c-3d90-4646-9314-28d44d164f76",
-        "spk": "Super___2bd1a32c_3d90_4646_9314_28d44d164f76___Power",
+        "spk": "Super__2bd1a32c_3d90_4646_9314_28d44d164f76__Power",
         "guid": "2bd1a32c-3d90-4646-9314-28d44d164f76"
     },
     "2dabfb4a-64cd-4c04-9772-4a75f9f3b710": {
@@ -117,7 +117,7 @@
         "power": "src\/2dabfb4a-64cd-4c04-9772-4a75f9f3b710\/code.power",
         "settings": "src\/2dabfb4a-64cd-4c04-9772-4a75f9f3b710\/settings.json",
         "path": "src\/2dabfb4a-64cd-4c04-9772-4a75f9f3b710",
-        "spk": "Load",
+        "spk": "Super__2dabfb4a_64cd_4c04_9772_4a75f9f3b710__Power",
         "guid": "2dabfb4a-64cd-4c04-9772-4a75f9f3b710"
     },
     "4c44e5d3-750c-4609-88c8-aa441838b8fe": {
@@ -128,7 +128,7 @@
         "power": "src\/4c44e5d3-750c-4609-88c8-aa441838b8fe\/code.power",
         "settings": "src\/4c44e5d3-750c-4609-88c8-aa441838b8fe\/settings.json",
         "path": "src\/4c44e5d3-750c-4609-88c8-aa441838b8fe",
-        "spk": "Super___4c44e5d3_750c_4609_88c8_aa441838b8fe___Power",
+        "spk": "Super__4c44e5d3_750c_4609_88c8_aa441838b8fe__Power",
         "guid": "4c44e5d3-750c-4609-88c8-aa441838b8fe"
     },
     "6caf9473-133c-49a9-afa0-9f84151b5155": {
@@ -139,7 +139,7 @@
         "power": "src\/6caf9473-133c-49a9-afa0-9f84151b5155\/code.power",
         "settings": "src\/6caf9473-133c-49a9-afa0-9f84151b5155\/settings.json",
         "path": "src\/6caf9473-133c-49a9-afa0-9f84151b5155",
-        "spk": "Insert",
+        "spk": "Super__6caf9473_133c_49a9_afa0_9f84151b5155__Power",
         "guid": "6caf9473-133c-49a9-afa0-9f84151b5155"
     },
     "d5de47ce-9a9e-4e76-a5c6-61ed74842ea3": {
@@ -150,7 +150,7 @@
         "power": "src\/d5de47ce-9a9e-4e76-a5c6-61ed74842ea3\/code.power",
         "settings": "src\/d5de47ce-9a9e-4e76-a5c6-61ed74842ea3\/settings.json",
         "path": "src\/d5de47ce-9a9e-4e76-a5c6-61ed74842ea3",
-        "spk": "Database",
+        "spk": "Super__d5de47ce_9a9e_4e76_a5c6_61ed74842ea3__Power",
         "guid": "d5de47ce-9a9e-4e76-a5c6-61ed74842ea3"
     },
     "55280ec7-e48d-431b-af25-10308dd30636": {
@@ -161,7 +161,7 @@
         "power": "src\/55280ec7-e48d-431b-af25-10308dd30636\/code.power",
         "settings": "src\/55280ec7-e48d-431b-af25-10308dd30636\/settings.json",
         "path": "src\/55280ec7-e48d-431b-af25-10308dd30636",
-        "spk": "Super___55280ec7_e48d_431b_af25_10308dd30636___Power",
+        "spk": "Super__55280ec7_e48d_431b_af25_10308dd30636__Power",
         "guid": "55280ec7-e48d-431b-af25-10308dd30636"
     },
     "0d9442ab-54d9-4947-a219-244cfaea3084": {
@@ -172,7 +172,7 @@
         "power": "src\/0d9442ab-54d9-4947-a219-244cfaea3084\/code.power",
         "settings": "src\/0d9442ab-54d9-4947-a219-244cfaea3084\/settings.json",
         "path": "src\/0d9442ab-54d9-4947-a219-244cfaea3084",
-        "spk": "Super___0d9442ab_54d9_4947_a219_244cfaea3084___Power",
+        "spk": "Super__0d9442ab_54d9_4947_a219_244cfaea3084__Power",
         "guid": "0d9442ab-54d9-4947-a219-244cfaea3084"
     },
     "e544a248-4b6a-46cb-9926-a3ac9937807c": {
@@ -183,7 +183,7 @@
         "power": "src\/e544a248-4b6a-46cb-9926-a3ac9937807c\/code.power",
         "settings": "src\/e544a248-4b6a-46cb-9926-a3ac9937807c\/settings.json",
         "path": "src\/e544a248-4b6a-46cb-9926-a3ac9937807c",
-        "spk": "Search",
+        "spk": "Super__e544a248_4b6a_46cb_9926_a3ac9937807c__Power",
         "guid": "e544a248-4b6a-46cb-9926-a3ac9937807c"
     },
     "15d9e1a9-3364-4d69-9d9f-9b87db820e5c": {
@@ -194,7 +194,7 @@
         "power": "src\/15d9e1a9-3364-4d69-9d9f-9b87db820e5c\/code.power",
         "settings": "src\/15d9e1a9-3364-4d69-9d9f-9b87db820e5c\/settings.json",
         "path": "src\/15d9e1a9-3364-4d69-9d9f-9b87db820e5c",
-        "spk": "Find",
+        "spk": "Super__15d9e1a9_3364_4d69_9d9f_9b87db820e5c__Power",
         "guid": "15d9e1a9-3364-4d69-9d9f-9b87db820e5c"
     },
     "afdae35d-fe7f-4055-99ea-afd8ff8349b6": {
@@ -205,7 +205,7 @@
         "power": "src\/afdae35d-fe7f-4055-99ea-afd8ff8349b6\/code.power",
         "settings": "src\/afdae35d-fe7f-4055-99ea-afd8ff8349b6\/settings.json",
         "path": "src\/afdae35d-fe7f-4055-99ea-afd8ff8349b6",
-        "spk": "Super___afdae35d_fe7f_4055_99ea_afd8ff8349b6___Power",
+        "spk": "Super__afdae35d_fe7f_4055_99ea_afd8ff8349b6__Power",
         "guid": "afdae35d-fe7f-4055-99ea-afd8ff8349b6"
     },
     "3ac29912-0681-4ca9-8197-d5a8f6a49ac7": {
@@ -216,7 +216,7 @@
         "power": "src\/3ac29912-0681-4ca9-8197-d5a8f6a49ac7\/code.power",
         "settings": "src\/3ac29912-0681-4ca9-8197-d5a8f6a49ac7\/settings.json",
         "path": "src\/3ac29912-0681-4ca9-8197-d5a8f6a49ac7",
-        "spk": "Update",
+        "spk": "Super__3ac29912_0681_4ca9_8197_d5a8f6a49ac7__Power",
         "guid": "3ac29912-0681-4ca9-8197-d5a8f6a49ac7"
     },
     "abc37ddd-1ff5-4204-9e5b-015ab4f3d4c7": {
@@ -227,7 +227,7 @@
         "power": "src\/abc37ddd-1ff5-4204-9e5b-015ab4f3d4c7\/code.power",
         "settings": "src\/abc37ddd-1ff5-4204-9e5b-015ab4f3d4c7\/settings.json",
         "path": "src\/abc37ddd-1ff5-4204-9e5b-015ab4f3d4c7",
-        "spk": "Replace",
+        "spk": "Super__abc37ddd_1ff5_4204_9e5b_015ab4f3d4c7__Power",
         "guid": "abc37ddd-1ff5-4204-9e5b-015ab4f3d4c7"
     },
     "0b658434-3767-401e-addc-eabfd1d0e94a": {
@@ -238,7 +238,7 @@
         "power": "src\/0b658434-3767-401e-addc-eabfd1d0e94a\/code.power",
         "settings": "src\/0b658434-3767-401e-addc-eabfd1d0e94a\/settings.json",
         "path": "src\/0b658434-3767-401e-addc-eabfd1d0e94a",
-        "spk": "Agent",
+        "spk": "Super__0b658434_3767_401e_addc_eabfd1d0e94a__Power",
         "guid": "0b658434-3767-401e-addc-eabfd1d0e94a"
     },
     "cc6972a7-1574-4ae0-92a8-7f1012aac6f7": {
@@ -249,7 +249,7 @@
         "power": "src\/cc6972a7-1574-4ae0-92a8-7f1012aac6f7\/code.power",
         "settings": "src\/cc6972a7-1574-4ae0-92a8-7f1012aac6f7\/settings.json",
         "path": "src\/cc6972a7-1574-4ae0-92a8-7f1012aac6f7",
-        "spk": "Agent",
+        "spk": "Super__cc6972a7_1574_4ae0_92a8_7f1012aac6f7__Power",
         "guid": "cc6972a7-1574-4ae0-92a8-7f1012aac6f7"
     },
     "01a89ba8-f8bb-435c-93de-0a8f3fa9432a": {
@@ -260,7 +260,7 @@
         "power": "src\/01a89ba8-f8bb-435c-93de-0a8f3fa9432a\/code.power",
         "settings": "src\/01a89ba8-f8bb-435c-93de-0a8f3fa9432a\/settings.json",
         "path": "src\/01a89ba8-f8bb-435c-93de-0a8f3fa9432a",
-        "spk": "Factory",
+        "spk": "Super__01a89ba8_f8bb_435c_93de_0a8f3fa9432a__Power",
         "guid": "01a89ba8-f8bb-435c-93de-0a8f3fa9432a"
     }
 }
