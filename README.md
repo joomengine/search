@@ -23,9 +23,6 @@ This repository contains an index (see below) of all the approved powers within 
 
 # Index of powers
 
-- **Namespace**: [VDM\Joomla\Componentbuilder\Interfaces](#vdm-joomla-componentbuilder-interfaces)
-
-  - **interface UpdateInterface** | [Details](src/7179fde6-1e51-4b51-8545-7ca18f74a0f4) | [Code](src/7179fde6-1e51-4b51-8545-7ca18f74a0f4/code.php) | [Settings](src/7179fde6-1e51-4b51-8545-7ca18f74a0f4/settings.json) | [7179fde6-1e51-4b51-8545-7ca18f74a0f4](src/7179fde6-1e51-4b51-8545-7ca18f74a0f4)
 - **Namespace**: [VDM\Joomla\Componentbuilder\Search](#vdm-joomla-componentbuilder-search)
 
   - **abstract class Factory** | [Details](src/01a89ba8-f8bb-435c-93de-0a8f3fa9432a) | [Code](src/01a89ba8-f8bb-435c-93de-0a8f3fa9432a/code.php) | [Settings](src/01a89ba8-f8bb-435c-93de-0a8f3fa9432a/settings.json) | [01a89ba8-f8bb-435c-93de-0a8f3fa9432a](src/01a89ba8-f8bb-435c-93de-0a8f3fa9432a)
@@ -68,26 +65,6 @@ This repository contains an index (see below) of all the approved powers within 
   - **class Search** | [Details](src/da714ea5-96bb-4eb1-959b-39b457be9cd1) | [Code](src/da714ea5-96bb-4eb1-959b-39b457be9cd1/code.php) | [Settings](src/da714ea5-96bb-4eb1-959b-39b457be9cd1/settings.json) | [da714ea5-96bb-4eb1-959b-39b457be9cd1](src/da714ea5-96bb-4eb1-959b-39b457be9cd1)
 
 # Class Diagrams
-
-## VDM Joomla Componentbuilder Interfaces
-> namespace VDM\Joomla\Componentbuilder\Interfaces
-```uml
-@startuml
-
-namespace VDM\Joomla\Componentbuilder\Interfaces #Olive {
-
-
-  interface UpdateInterface  #Lavender {
-    + rows() : bool
-    + items() : bool
-    + row() : bool
-    + item() : bool
-  }
-}
-
-
-@enduml
-```
 
 ## VDM Joomla Componentbuilder Search
 > namespace VDM\Joomla\Componentbuilder\Search
