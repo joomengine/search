@@ -11,6 +11,8 @@
 ```uml
 @startuml
 class Config  #Gold {
+  # Input $input
+  + __construct(?Input $input = null)
   # getTypesearch() : ?int
   # getSearchvalue() : ?string
   # getReplacevalue() : string
@@ -27,98 +29,104 @@ class Config  #Gold {
   # getMarkerend() : string
 }
 
-note right of Config::getTypesearch
+note right of Config::__construct
+  Constructor
+
+  since: 3.2.0
+end note
+
+note left of Config::getTypesearch
   get type search being preformed
 
   since: 3.2.0
   return: ?int
 end note
 
-note left of Config::getSearchvalue
+note right of Config::getSearchvalue
   get posted search value
 
   since: 3.2.0
   return: ?string
 end note
 
-note right of Config::getReplacevalue
+note left of Config::getReplacevalue
   get posted replace value
 
   since: 3.2.0
   return: string
 end note
 
-note left of Config::getMatchcase
+note right of Config::getMatchcase
   get posted search match case
 
   since: 3.2.0
   return: int
 end note
 
-note right of Config::getWholeword
+note left of Config::getWholeword
   get posted search whole word
 
   since: 3.2.0
   return: int
 end note
 
-note left of Config::getRegexsearch
+note right of Config::getRegexsearch
   get posted search regex
 
   since: 3.2.0
   return: int
 end note
 
-note right of Config::getComponentid
+note left of Config::getComponentid
   get posted component
 
   since: 3.2.0
   return: int
 end note
 
-note left of Config::getTablename
+note right of Config::getTablename
   get posted area/table
 
   since: 3.2.0
   return: ?string
 end note
 
-note right of Config::getFieldname
+note left of Config::getFieldname
   get posted field
 
   since: 3.2.0
   return: ?string
 end note
 
-note left of Config::getItemid
+note right of Config::getItemid
   get posted item id
 
   since: 3.2.0
   return: int
 end note
 
-note right of Config::getFieldcounter
+note left of Config::getFieldcounter
   get field counter
 
   since: 3.2.0
   return: int
 end note
 
-note left of Config::getLinecounter
+note right of Config::getLinecounter
   get line counter
 
   since: 3.2.0
   return: int
 end note
 
-note right of Config::getMarkerstart
+note left of Config::getMarkerstart
   get the start marker
 
   since: 3.2.0
   return: string
 end note
 
-note left of Config::getMarkerend
+note right of Config::getMarkerend
   get the end marker
 
   since: 3.2.0

@@ -1,4 +1,28 @@
 	/**
+	 * Hold a JInput object for easier access to the input variables.
+	 *
+	 * @var    Input
+	 * @since 3.2.0
+	 */
+	protected Input $input;
+
+	/**
+	 * Constructor
+	 *
+	 * @param Input|null    $input  Input
+	 *
+	 * @throws \Exception
+	 * @since 3.2.0
+	 */
+	public function __construct(?Input $input = null)
+	{
+		$this->input = $input ?: Factory::getApplication()->input;
+
+		// run parent constructor
+		parent::__construct();
+	}
+
+	/**
 	 * get type search being preformed
 	 *
 	 * @return  int   the search type 1 = search, 2 = search & replace
