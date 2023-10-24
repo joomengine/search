@@ -8,6 +8,7 @@
 ```
 # class Config (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search**
+> extends: **BaseConfig**
 ```uml
 @startuml
 class Config  #Gold {

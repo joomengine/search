@@ -8,6 +8,7 @@
 ```
 # class Load (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Model**
+> extends: **Model**
 ```uml
 @startuml
 class Load  #Gold {

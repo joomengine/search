@@ -8,6 +8,7 @@
 ```
 # class Basic (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Engine**
+> extends: **Engine**
 ```uml
 @startuml
 class Basic  #Gold {

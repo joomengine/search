@@ -8,6 +8,7 @@
 ```
 # class Regex (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Engine**
+> extends: **Engine**
 ```uml
 @startuml
 class Regex  #Gold {
