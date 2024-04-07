@@ -14,7 +14,7 @@ class Insert  #Gold {
   # Config $config
   # Table $table
   # Model $model
-  # \JDatabaseDriver $db
+  # $db
   + __construct(?Config $config = null, ?Table $table = null, ...)
   + value(mixed $value, int $id, ...) : bool
   + item(object $item, ?string $table = null) : bool
@@ -30,7 +30,6 @@ note right of Insert::__construct
     ?Config $config = null
     ?Table $table = null
     ?Model $model = null
-    ?\JDatabaseDriver $db = null
 end note
 
 note right of Insert::value
