@@ -12,8 +12,8 @@
 namespace VDM\Joomla\Componentbuilder\Search\Agent;
 
 
-use VDM\Joomla\Utilities\ArrayHelper;
-use VDM\Joomla\Utilities\StringHelper;
+use VastDevelopmentMethod\Joomla\Utilities\ArrayHelper;
+use VastDevelopmentMethod\Joomla\Utilities\StringHelper;
 use VDM\Joomla\Componentbuilder\Search\Factory;
 use VDM\Joomla\Componentbuilder\Search\Config;
 use VDM\Joomla\Componentbuilder\Search\Interfaces\SearchTypeInterface as SearchEngine;

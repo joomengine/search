@@ -13,8 +13,8 @@ namespace VDM\Joomla\Componentbuilder\Search\Engine;
 
 
 use VDM\Joomla\Componentbuilder\Search\Config;
-use VDM\Joomla\Utilities\StringHelper;
-use VDM\Joomla\Utilities\ArrayHelper;
+use VastDevelopmentMethod\Joomla\Utilities\StringHelper;
+use VastDevelopmentMethod\Joomla\Utilities\ArrayHelper;
 use VDM\Joomla\Componentbuilder\Search\Interfaces\SearchTypeInterface;
 use VDM\Joomla\Componentbuilder\Search\Abstraction\Engine;
 

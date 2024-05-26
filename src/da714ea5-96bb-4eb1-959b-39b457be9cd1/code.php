@@ -15,7 +15,7 @@ namespace VDM\Joomla\Componentbuilder\Search\Service;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use VDM\Joomla\Componentbuilder\Search\Config;
-use VDM\Joomla\Componentbuilder\Table;
+use VastDevelopmentMethod\Joomla\Componentbuilder\Table;
 use VDM\Joomla\Componentbuilder\Search\Interfaces\SearchTypeInterface as SearchEngine;
 use VDM\Joomla\Componentbuilder\Search\Engine\Regex;
 use VDM\Joomla\Componentbuilder\Search\Engine\Basic;

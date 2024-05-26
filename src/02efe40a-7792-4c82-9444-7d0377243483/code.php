@@ -13,11 +13,11 @@ namespace VDM\Joomla\Componentbuilder\Search\Model;
 
 
 use VDM\Joomla\Componentbuilder\Search\Factory;
-use VDM\Joomla\Componentbuilder\Table;
+use VastDevelopmentMethod\Joomla\Componentbuilder\Table;
 use VDM\Joomla\Componentbuilder\Search\Config;
-use VDM\Joomla\Utilities\ArrayHelper;
-use VDM\Joomla\Interfaces\ModelInterface;
-use VDM\Joomla\Abstraction\Model;
+use VastDevelopmentMethod\Joomla\Utilities\ArrayHelper;
+use VastDevelopmentMethod\Joomla\Interfaces\ModelInterface;
+use VastDevelopmentMethod\Joomla\Abstraction\Model;
 
 
 /**
