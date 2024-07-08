@@ -15,9 +15,9 @@ namespace VDM\Joomla\Componentbuilder\Search\Database;
 use Joomla\CMS\Factory as JoomlaFactory;
 use VDM\Joomla\Componentbuilder\Search\Factory;
 use VDM\Joomla\Componentbuilder\Search\Config;
-use VastDevelopmentMethod\Joomla\Componentbuilder\Table;
+use VDM\Joomla\Componentbuilder\Table;
 use VDM\Joomla\Componentbuilder\Search\Model\Insert as Model;
-use VastDevelopmentMethod\Joomla\Utilities\ArrayHelper;
+use VDM\Joomla\Utilities\ArrayHelper;
 use VDM\Joomla\Componentbuilder\Search\Interfaces\InsertInterface;
 
 

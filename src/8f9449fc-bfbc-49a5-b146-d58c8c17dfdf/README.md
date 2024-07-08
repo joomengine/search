@@ -8,6 +8,7 @@
 ```
 # abstract class Engine (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Abstraction**
+> extends: ****
 ```uml
 @startuml
 abstract Engine  #Orange {

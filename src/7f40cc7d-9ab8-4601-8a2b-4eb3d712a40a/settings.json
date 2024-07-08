@@ -1,7 +1,7 @@
 {
     "add_head": "1",
     "add_licensing_template": "2",
-    "extends": "0",
+    "extends": "",
     "guid": "7f40cc7d-9ab8-4601-8a2b-4eb3d712a40a",
     "implements": [
         "-1"
@@ -21,6 +21,7 @@
             "as": "default"
         }
     },
+    "extendsinterfaces": null,
     "namespace": "VDM\\Joomla\\Componentbuilder.Search.Service.Model",
     "description": "Model Service Provider\r\n\r\n@since 3.2.0",
     "implements_custom": "ServiceProviderInterface",

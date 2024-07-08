@@ -8,6 +8,7 @@
 ```
 # interface SearchInterface (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Interfaces**
+> extends: ****
 ```uml
 @startuml
 interface SearchInterface  #Lavender {

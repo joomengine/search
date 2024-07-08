@@ -8,6 +8,7 @@
 ```
 # interface ReplaceInterface (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Interfaces**
+> extends: ****
 ```uml
 @startuml
 interface ReplaceInterface  #Lavender {

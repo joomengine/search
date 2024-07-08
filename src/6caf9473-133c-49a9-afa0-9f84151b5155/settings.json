@@ -1,7 +1,7 @@
 {
     "add_head": "1",
     "add_licensing_template": "2",
-    "extends": "0",
+    "extends": "",
     "guid": "6caf9473-133c-49a9-afa0-9f84151b5155",
     "implements": [
         "4c44e5d3-750c-4609-88c8-aa441838b8fe"
@@ -33,6 +33,7 @@
             "as": "default"
         }
     },
+    "extendsinterfaces": null,
     "namespace": "VDM\\Joomla\\Componentbuilder.Search.Database.Insert",
     "description": "Search Database Set\r\n\r\n@since 3.2.0",
     "licensing_template": "\/**\r\n * @package    Joomla.Component.Builder\r\n *\r\n * @created    4th September, 2022\r\n * @author     Llewellyn van der Merwe <https:\/\/dev.vdm.io>\r\n * @git        Joomla Component Builder <https:\/\/git.vdm.dev\/joomla\/Component-Builder>\r\n * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.\r\n * @license    GNU General Public License version 2 or later; see LICENSE.txt\r\n *\/\r\n",

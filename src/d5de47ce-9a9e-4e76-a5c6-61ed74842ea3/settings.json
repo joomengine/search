@@ -1,7 +1,7 @@
 {
     "add_head": "1",
     "add_licensing_template": "2",
-    "extends": "0",
+    "extends": "",
     "guid": "d5de47ce-9a9e-4e76-a5c6-61ed74842ea3",
     "implements": [
         "-1"
@@ -25,6 +25,7 @@
             "as": "InsertDatabase"
         }
     },
+    "extendsinterfaces": null,
     "namespace": "VDM\\Joomla\\Componentbuilder.Search.Service.Database",
     "description": "Database Service Provider\r\n\r\n@since 3.2.0",
     "implements_custom": "ServiceProviderInterface",

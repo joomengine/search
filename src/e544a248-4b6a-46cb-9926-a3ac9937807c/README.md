@@ -8,6 +8,7 @@
 ```
 # class Search (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Agent**
+> extends: ****
 ```uml
 @startuml
 class Search  #Gold {

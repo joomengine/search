@@ -8,6 +8,7 @@
 ```
 # class Replace (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Agent**
+> extends: ****
 ```uml
 @startuml
 class Replace  #Gold {

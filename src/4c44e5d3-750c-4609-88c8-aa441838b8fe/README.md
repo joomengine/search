@@ -8,6 +8,7 @@
 ```
 # interface InsertInterface (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Interfaces**
+> extends: ****
 ```uml
 @startuml
 interface InsertInterface  #Lavender {

@@ -14,7 +14,7 @@ namespace VDM\Joomla\Componentbuilder\Search;
 
 use Joomla\CMS\Factory;
 use Joomla\Input\Input;
-use VastDevelopmentMethod\Joomla\Abstraction\BaseConfig;
+use VDM\Joomla\Abstraction\BaseConfig;
 
 
 /**

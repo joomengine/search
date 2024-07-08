@@ -8,6 +8,7 @@
 ```
 # class Agent (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Service**
+> extends: ****
 ```uml
 @startuml
 class Agent  #Gold {

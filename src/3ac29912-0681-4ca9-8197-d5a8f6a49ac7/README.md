@@ -8,6 +8,7 @@
 ```
 # class Update (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Agent**
+> extends: ****
 ```uml
 @startuml
 class Update  #Gold {
