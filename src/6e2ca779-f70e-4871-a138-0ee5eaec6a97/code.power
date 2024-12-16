@@ -17,9 +17,6 @@
 	public function __construct(?Input $input = null)
 	{
 		$this->input = $input ?: Factory::getApplication()->input;
-
-		// run parent constructor
-		parent::__construct();
 	}
 
 	/**

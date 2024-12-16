@@ -8,7 +8,7 @@
 ```
 # class Config (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search**
-> extends: **BaseConfig**
+> extends: **FunctionRegistry**
 
 ```uml
 @startuml
