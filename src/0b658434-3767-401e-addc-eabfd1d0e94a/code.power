@@ -347,7 +347,7 @@
 		$tab = $this->table->get($view, $field, 'tab_name');
 
 		// return edit link	
-		return '<a class="hasTooltip btn btn-mini" href="index.php?option=com_componentbuilder' .
+		return '<a class="hasTooltip btn btn-mini" href="index.php?option=com_[[[component]]]' .
 			'&view=' . $views .
 			'&task=' . $view . '.edit' .
 			'&id=' . $id .
