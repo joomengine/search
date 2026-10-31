@@ -113,6 +113,14 @@ class Find implements FindInterface
 			$id = $item->id;
 		}
 
+		// A repeated scan of this item also clears fields removed since the last scan.
+		$this->search->resetItem($id, $table);
+		unset($this->found[$table][$id]);
+		if (empty($this->found[$table]))
+		{
+			unset($this->found[$table]);
+		}
+
 		if (ObjectHelper::check($item))
 		{
 			foreach ($item as $field => $value)
@@ -151,7 +159,8 @@ class Find implements FindInterface
 		{
 			foreach ($items as $id => $item)
 			{
-				$this->item($item, $id, $table);
+				// Public callers may supply a list rather than an ID-keyed array.
+				$this->item($item, isset($item->id) ? (int) $item->id : (int) $id, $table);
 			}
 		}
 	}

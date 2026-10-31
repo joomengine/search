@@ -87,6 +87,17 @@
         "spk": "Super---2dabfb4a_64cd_4c04_9772_4a75f9f3b710---Power",
         "guid": "2dabfb4a-64cd-4c04-9772-4a75f9f3b710"
     },
+    "33f11e5c-7055-4a7a-90ed-2f456b578674": {
+        "name": "DocumentSearchInterface",
+        "type": "interface",
+        "namespace": "VDM\\Joomla\\Componentbuilder\\Search\\Interfaces",
+        "code": "src\/33f11e5c-7055-4a7a-90ed-2f456b578674\/code.php",
+        "power": "src\/33f11e5c-7055-4a7a-90ed-2f456b578674\/code.power",
+        "settings": "src\/33f11e5c-7055-4a7a-90ed-2f456b578674\/settings.json",
+        "path": "src\/33f11e5c-7055-4a7a-90ed-2f456b578674",
+        "spk": "Super---33f11e5c_7055_4a7a_90ed_2f456b578674---Power",
+        "guid": "33f11e5c-7055-4a7a-90ed-2f456b578674"
+    },
     "3ac29912-0681-4ca9-8197-d5a8f6a49ac7": {
         "name": "Update",
         "type": "class",

@@ -2,6 +2,24 @@
 # class Search (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Agent**
 
+## Document matching and nested values
+
+The agent uses `DocumentSearchInterface::lines()` when available. Each result
+retains its original one-based **starting line**, and its marked snippet may span
+several lines. Engines implementing only `SearchTypeInterface` keep their
+existing per-line behaviour.
+
+Nested arrays are searched recursively without a fixed depth limit. Only string
+leaves are searched, so matches cannot cross separate fields or subform values.
+Result keys retain the `array.key.line` format. Literal dots in keys are escaped
+as `\.` and literal backslashes as `\\`; for example, key `first.name` on line 2
+becomes `first\.name.2`. Numeric key `0` remains a valid path segment.
+
+Searching the same table, item and field again replaces its previous results;
+a field that no longer matches has its stale results removed. `resetItem()`
+clears one item before a complete rescan so fields removed from that item do
+not leave stale results; other items in the table are preserved.
+
 ```uml
 @startuml
 
@@ -13,6 +31,7 @@ class Search  #Gold {
   + get(string $table) : ?array
   + value(mixed $value, int $id, ...) : bool
   + reset(string $table) : void
+  + resetItem(int $id, string $table) : void
   # searchValue(mixed $value) : ?array
   # string(string $value) : ?array
   # prep(int $id, string $field, ...) : void

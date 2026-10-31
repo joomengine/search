@@ -2,6 +2,8 @@
 # class Agent (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search**
 
+Each find or replace operation starts with cleared per-table result buckets, allowing the shared service to be reused without returning or updating stale results.
+
 ```uml
 @startuml
 

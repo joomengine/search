@@ -1,36 +1,27 @@
-### JCB! Power
-# abstract class Engine (Details)
-> namespace: **VDM\Joomla\Componentbuilder\Search\Abstraction**
+# abstract class Engine
 
-```uml
-@startuml
+Namespace: **VDM\Joomla\Componentbuilder\Search\Abstraction**
 
-abstract Engine  #Orange {
-  # Config $config
-  # ?string $searchValue
-  # string $replaceValue
-  # int $matchCase
-  # int $wholeWord
-  # string $start
-  # string $end
-  + __construct(?Config $config = null)
-  # lineCounter()
-}
+Shared compiled-pattern matching, source offsets, literal highlighting, line
+mapping and replacement support for Basic and Regex. This base deliberately does
+not declare `DocumentSearchInterface`: existing custom subclasses must explicitly
+opt in to the new capability rather than accidentally bypassing their own methods.
 
-note right of Engine::__construct
-  Constructor
+| Public method | Purpose |
+| --- | --- |
+| `__construct(?Config $config = null)` | Snapshot query options, replacement and markers. |
+| `match(string $value): bool` | Test the compiled pattern without counters. |
+| `string(string $value): ?string` | Mark the original value; count one invocation. |
+| `lines(string $value): ?array` | Mark complete source spans keyed by starting line; count physical lines once. |
+| `replace(string $value): string` | Replace complete-document matches. |
+| `replaceLine(string $value, int $line): string` | Replace matches starting on one original line. |
 
-  since: 3.2.0
-end note
+Protected helpers separate matching (`matches`, `checkResult`, `validatePattern`),
+source presentation (`mark`, `lineMap`, `lineAt`, `countLines`, `lineCounter`) and
+replacement (`replaceMatches`, `replacement`, `replacementText`, `quoteReplacement`).
+Subclasses compile their patterns; Regex overrides replacement interpretation.
 
-note right of Engine::lineCounter
-  we count every line being searched
-
-  since: 3.2.0
-end note
-
-@enduml
-```
+Power version: `1.1.0`. See [behavior, examples and compatibility](../../docs/search.md).
 
 The **Power** feature in JCB allows you to write PHP classes and their implementations,
 making it easy to include them in your Joomla project. JCB handles linking, autoloading,

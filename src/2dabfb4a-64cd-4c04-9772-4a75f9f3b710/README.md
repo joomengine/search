@@ -2,11 +2,14 @@
 # class Load (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Database**
 
+Paginated reads use ascending record IDs and advance from the raw database batch. Records filtered out by the model cannot cause later matches to be skipped; an entirely filtered batch is passed over automatically. Starting at bundle 1 resets the cursor. Unpaginated reads retain title ordering.
+
 ```uml
 @startuml
 
 class Load  #Gold {
   # int $bundle
+  # array $lastIds
   # Config $config
   # Table $table
   # Model $model

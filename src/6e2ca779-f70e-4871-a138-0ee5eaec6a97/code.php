@@ -198,5 +198,18 @@ class Config extends FunctionRegistry
 	{
 		return ']=' . '|' . '+}';
 	}
+
+	/**
+	 * Tolerate differences in literal-search whitespace by default.
+	 * Set ignore_whitespace=0 for byte-exact spaces, tabs and line endings.
+	 * Regex searches always retain the expression's own whitespace rules.
+	 *
+	 * @return  int
+	 * @since   1.1.0
+	 */
+	protected function getIgnorewhitespace(): int
+	{
+		return $this->input->get('ignore_whitespace', 1, 'INT');
+	}
 }
 

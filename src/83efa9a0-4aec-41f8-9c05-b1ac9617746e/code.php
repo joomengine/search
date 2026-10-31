@@ -13,7 +13,7 @@ namespace VDM\Joomla\Componentbuilder\Search\Engine;
 
 
 use VDM\Joomla\Componentbuilder\Search\Config;
-use VDM\Joomla\Componentbuilder\Search\Interfaces\SearchTypeInterface;
+use VDM\Joomla\Componentbuilder\Search\Interfaces\DocumentSearchInterface;
 use VDM\Joomla\Componentbuilder\Search\Abstraction\Engine;
 
 
@@ -22,22 +22,13 @@ use VDM\Joomla\Componentbuilder\Search\Abstraction\Engine;
  * 
  * @since 3.2.0
  */
-class Regex extends Engine implements SearchTypeInterface
+class Regex extends Engine implements DocumentSearchInterface
 {
 	/**
-	 * Regex Search Value
+	 * Construct and compile the pattern once for this search configuration.
 	 *
-	 * @var    string
+	 * @param  Config|null  $config  The search configuration.
 	 * @since  3.2.0
-	 */
-	protected string $regexValue = '';
-
-	/**
-	 * Constructor
-	 *
-	 * @param Config|null    $config    The search config object.
-	 *
-	 * @since 3.2.0
 	 */
 	public function __construct(?Config $config = null)
 	{
@@ -46,86 +37,110 @@ class Regex extends Engine implements SearchTypeInterface
 	}
 
 	/**
-	 * Search inside a string
+	 * Compile a raw PCRE expression without adding capturing groups.
+	 * Numeric captures/backreferences retain their user-supplied numbering.
+	 * Multiline anchors are enabled; use (?s) when dot must cross newlines.
 	 *
-	 * @param   string    $value   The string value
-	 *
-	 * @return  string|null    The marked string if found, else null
-	 * @since   3.2.0
-	 */
-	public function string(string $value): ?string
-	{
-		// we count every line
-		$this->lineCounter();
-
-		if (empty($this->searchValue) || !$this->match($value))
-		{
-			return null;
-		}
-
-		$result = preg_replace(
-			$this->regexValue,
-			$this->start . '$1' . $this->end,
-			$value
-		);
-
-		return is_string($result) ? trim($result) : null;
-	}
-
-	/**
-	 * Replace found instances inside string value
-	 *
-	 * @param   string     $value      The string value to update
-	 *
-	 * @return  string      The updated string
-	 * @since   3.2.0
-	 */
-	public function replace(string $value): string
-	{
-		if (empty($this->searchValue) || !$this->match($value))
-		{
-			return $value;
-		}
-
-		$result = preg_replace(
-			$this->regexValue,
-			(string) $this->replaceValue,
-			$value
-		);
-
-		return is_string($result) ? $result : $value;
-	}
-
-	/**
-	 * Math the Regular Expression
-	 *
-	 * @param   string    $value  The string value
-	 *
-	 * @return  bool  true if match is found
-	 * @since   3.0.9
-	 */
-	public function match(string $value): bool
-	{
-		return !empty($this->searchValue) && preg_match($this->regexValue, $value) === 1;
-	}
-
-	/**
-	 * Compile regex pattern
-	 *
-	 * @return void
-	 * @since  5.1.1
+	 * @return  void
+	 * @since   5.1.1
 	 */
 	protected function compileRegex(): void
 	{
-		if (empty($this->searchValue))
+		if ($this->searchValue === null || $this->searchValue === '')
 		{
-			$this->regexValue = '//';
+			$this->regexValue = '';
 			return;
 		}
 
-		$flags = $this->matchCase === 1 ? 'm' : 'mi';
-		$pattern = (string) $this->searchValue;
-		$this->regexValue = "/($pattern)/$flags";
+		// An absent delimiter leaves every escape and \Q...\E region intact.
+		// Fail explicitly for the pathological case containing this complete
+		// alphabet rather than rewriting and silently changing the expression.
+		$delimiter = null;
+		$candidates = ['~', '#', '%', '!', '/', '@', ';', '`', '=', '&', ':', ',', '-', '"', "'"];
+
+		for ($code = 1; $code < 32; $code++)
+		{
+			if (!in_array($code, [9, 10, 11, 12, 13], true))
+			{
+				$candidates[] = chr($code);
+			}
+		}
+
+		foreach ($candidates as $candidate)
+		{
+			if (strpos($this->searchValue, $candidate) === false)
+			{
+				$delimiter = $candidate;
+				break;
+			}
+		}
+
+		if ($delimiter === null)
+		{
+			throw new \InvalidArgumentException('Search expression contains every supported delimiter; use hexadecimal escapes for literal control characters.');
+		}
+
+		// Preserve anchored searches across every physical newline accepted by
+		// the legacy line splitter. A user newline directive can override ANY.
+		$this->regexValue = $delimiter . '(*ANY)' . $this->searchValue . $delimiter
+			. ($this->matchCase === 1 ? 'm' : 'mi');
+		$this->validatePattern();
+	}
+
+	/**
+	 * Regex replacement text retains PHP's numbered capture syntax.
+	 *
+	 * @return  string
+	 * @since   1.1.0
+	 */
+	protected function replacementText(): string
+	{
+		return $this->replaceValue;
+	}
+
+	/**
+	 * Expand PHP-style numbered replacement references using the captures
+	 * from the original document, including lookarounds outside the match.
+	 * Supports $0..$99, ${0}..${99}, backslash-number and escaped slashes/$.
+	 *
+	 * @param   array  $match  Original captures and their offsets.
+	 * @return  string
+	 * @since   1.1.0
+	 */
+	protected function replacement(array $match): string
+	{
+		$result = '';
+		$length = strlen($this->replaceValue);
+
+		for ($index = 0; $index < $length; $index++)
+		{
+			$character = $this->replaceValue[$index];
+
+			if ($character === '\\' && $index + 1 < $length
+				&& ($this->replaceValue[$index + 1] === '\\' || $this->replaceValue[$index + 1] === '$'))
+			{
+				$result .= $this->replaceValue[++$index];
+				continue;
+			}
+
+			if ($character === '$' || $character === '\\')
+			{
+				$tail = substr($this->replaceValue, $index + 1, 4);
+				$reference = [];
+
+				if (preg_match('/^([0-9]{1,2})/', $tail, $reference)
+					|| ($character === '$' && preg_match('/^\{([0-9]{1,2})\}/', $tail, $reference)))
+				{
+					$result .= $match[(int) $reference[1]][0] ?? '';
+					$index += strlen($reference[0]);
+					continue;
+				}
+			}
+
+			$result .= $character;
+		}
+
+		return $result;
 	}
 }
 

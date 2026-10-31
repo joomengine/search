@@ -3,6 +3,8 @@
 > namespace: **VDM\Joomla\Componentbuilder\Search**
 > extends: **FunctionRegistry**
 
+`ignore_whitespace` defaults to `1` for literal searches; `0` selects exact whitespace. The new `getIgnorewhitespace(): int` accessor follows the existing lazy Config registry pattern. Regex expressions retain their own whitespace rules. See [search behavior](../../docs/search.md).
+
 ```uml
 @startuml
 

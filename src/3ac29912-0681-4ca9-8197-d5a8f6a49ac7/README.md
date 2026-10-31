@@ -2,6 +2,28 @@
 # class Update (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Agent**
 
+## Document replacement and precise targets
+
+For `DocumentSearchInterface` engines, a positive line selects every complete
+match **beginning** on that original one-based line, including matches spanning
+several lines. `0` or `null` replaces all matches. A positive line without an
+array path applies that line to each string leaf. Invalid or out-of-range targets
+leave the value unchanged; `value()` returns `null` when nothing changes.
+
+Array targets use the paths emitted by the search agent: `array.key.line`.
+Literal dots and backslashes in keys are escaped as `\.` and `\\`. The path
+must identify a string leaf exactly, including numeric key `0`; an incomplete
+path cannot update sibling values or a whole subtree. Arrays may be nested to
+any depth, and non-string values retain their original type.
+
+The protected `validateUpdateKey()` filter remains active before every nested
+string update, including exact-path updates. Existing subclasses still receive
+the first four actual array keys; deeper recursion retains that filter contract.
+
+Legacy `SearchTypeInterface` engines continue to support line replacement.
+Their fallback preserves the original newline separators, including mixed LF,
+CRLF and CR, instead of rebuilding the document with the host's `PHP_EOL`.
+
 ```uml
 @startuml
 
@@ -10,7 +32,9 @@ class Update  #Gold {
   + __construct(?SearchEngine $search = null)
   + value(mixed $value, mixed $line) : mixed
   # updateValue(mixed $value, mixed $line) : mixed
-  # validateUpdateKey(int $line, mixed $keys = null, ...) : bool
+  # parseTarget(mixed $line) : ?array
+  # updateAtPath(mixed $value, array $path, int $line, ...) : mixed
+  # validateUpdateKey(mixed $line, mixed $keys = null, ...) : bool
   # string(string $value, int $line) : string
 }
 

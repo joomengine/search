@@ -1,17 +1,8 @@
 	/**
-	 * Regex Search Value
+	 * Construct and compile the pattern once for this search configuration.
 	 *
-	 * @var    string
+	 * @param  Config|null  $config  The search configuration.
 	 * @since  3.2.0
-	 */
-	protected string $regexValue = '';
-
-	/**
-	 * Constructor
-	 *
-	 * @param Config|null    $config    The search config object.
-	 *
-	 * @since 3.2.0
 	 */
 	public function __construct(?Config $config = null)
 	{
@@ -20,90 +11,59 @@
 	}
 
 	/**
-	 * Search inside a string
+	 * Quote literal text and optionally tolerate whitespace differences.
+	 * Whitespace runs match one or more spaces, tabs or line breaks. Keeping
+	 * a separator prevents "foo bar" from incorrectly matching "foobar".
 	 *
-	 * @param  string   $value   The string value
-	 *
-	 * @return  string|null    The marked string if found, else null
-	 * @since   3.2.0
-	 */
-	public function string(string $value): ?string
-	{
-		// we count every line
-		$this->lineCounter();
-
-		if (empty($this->searchValue) || !$this->match($value))
-		{
-			return null;
-		}
-
-		$result = preg_replace(
-			$this->regexValue,
-			$this->start . '$1' . $this->end,
-			$value
-		);
-
-		return is_string($result) ? trim($result) : null;
-	}
-
-	/**
-	 * Replace found instances inside string value
-	 *
-	 * @param   string   $value  The string value to update
-	 *
-	 * @return  string   The updated string
-	 * @since   3.2.0
-	 */
-	public function replace(string $value): string
-	{
-		if (empty($this->searchValue) || !$this->match($value))
-		{
-			return $value;
-		}
-
-		$result = preg_replace(
-			$this->regexValue,
-			(string) $this->replaceValue,
-			$value
-		);
-
-		return is_string($result) ? $result : $value;
-	}
-
-	/**
-	 * Check if search string exists in the value
-	 *
-	 * @param   string    $value  The string value
-	 *
-	 * @return  bool
-	 * @since   3.0.9
-	 */
-	public function match(string $value): bool
-	{
-		return !empty($this->searchValue) && preg_match($this->regexValue, $value) === 1;
-	}
-
-	/**
-	 * Compile regex pattern based on whole word and match case settings
-	 *
-	 * @return void
-	 * @since  5.1.1
+	 * @return  void
+	 * @since   5.1.1
 	 */
 	protected function compileRegex(): void
 	{
-		if (empty($this->searchValue))
+		$value = $this->searchValue;
+
+		if ($value === null || $value === '')
 		{
-			$this->regexValue = '//';
+			$this->regexValue = '';
 			return;
 		}
 
-		$quoted = preg_quote($this->searchValue, '/');
+		if ((int) $this->config->ignore_whitespace === 1)
+		{
+			$value = trim($value, " \t\r\n\v\f");
 
-		$pattern = $this->wholeWord === 1
-			? '\b' . $quoted . '\b'
-			: $quoted;
+			if ($value === '')
+			{
+				$this->regexValue = '';
+				return;
+			}
 
-		$flags = $this->matchCase === 1 ? 'm' : 'mi';
+			$parts = preg_split('/\s+/', $value);
+			$quoted = array_map(static function (string $part): string {
+				return preg_quote($part, '~');
+			}, $parts);
+			$pattern = implode('\s+', $quoted);
+		}
+		else
+		{
+			$pattern = preg_quote($value, '~');
+		}
 
-		$this->regexValue = "/($pattern)/$flags";
+		// Constrain word-character endpoints without preventing code such as
+		// "->method" from matching immediately after an object identifier.
+		if ($this->wholeWord === 1)
+		{
+			if (preg_match('/^\w/', $value))
+			{
+				$pattern = '(?<!\w)' . $pattern;
+			}
+
+			if (preg_match('/\w$/D', $value))
+			{
+				$pattern .= '(?!\w)';
+			}
+		}
+
+		$this->regexValue = '~' . $pattern . '~' . ($this->matchCase === 1 ? '' : 'i');
+		$this->validatePattern();
 	}

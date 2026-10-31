@@ -1,0 +1,21 @@
+{
+    "add_head": 0,
+    "add_licensing_template": 2,
+    "extends": "",
+    "guid": "33f11e5c-7055-4a7a-90ed-2f456b578674",
+    "implements": null,
+    "load_selection": null,
+    "name": "DocumentSearchInterface",
+    "power_version": "1.0.0",
+    "system_name": "JCB.Search.Interfaces.DocumentSearchInterface",
+    "type": "interface",
+    "use_selection": null,
+    "extendsinterfaces": [
+        "117d8c9e-3f8d-40ae-b375-1efa2fe5538a"
+    ],
+    "namespace": "[[[NamespacePrefix]]]\\Joomla\\[[[ComponentNamespace]]].Search.Interfaces.DocumentSearchInterface",
+    "description": "Optional whole-document search and line-targeted replacement contract.\r\n\r\n@since 1.0.0",
+    "licensing_template": "\/**\n * @package    Joomla.Component.Builder\n *\n * @copyright  Copyright (C) 2015 Vast Development Method. All rights reserved.\n * @license    GNU General Public License version 2 or later; see LICENSE.txt\n *\/\n",
+    "head": "",
+    "composer": ""
+}

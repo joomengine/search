@@ -8,7 +8,7 @@
     ],
     "load_selection": null,
     "name": "Find",
-    "power_version": "1.0.0",
+    "power_version": "1.0.1",
     "system_name": "JCB.Search.Agent.Find",
     "type": "class",
     "use_selection": {
