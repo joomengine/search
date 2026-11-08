@@ -1,56 +1,18 @@
-### JCB! Power
-# class Basic (Details)
-> namespace: **VDM\Joomla\Componentbuilder\Search\Engine**
-> extends: **Engine**
+# class Basic extends Engine implements DocumentSearchInterface
 
-```uml
-@startuml
+Namespace: **VDM\Joomla\Componentbuilder\Search\Engine**
 
-class Basic  #Gold {
-  # string $regexValue
-  + __construct(?Config $config = null)
-  + string(string $value) : ?string
-  + replace(string $value) : string
-  + match(string $value) : bool
-  # compileRegex() : void
-}
+Literal search compiles once, quotes metacharacters and supports case/whole-word
+options. `ignore_whitespace=1` is the default: trim only query-edge whitespace and
+match each internal whitespace run with `\s+`. Exact mode (`0`) preserves all
+query spacing. Literal replacement text never expands capture references.
 
-note right of Basic::__construct
-  Constructor
+`__construct(?Config $config = null)` calls the protected `compileRegex(): void`.
+The public `match`, `string`, `lines`, `replace` and `replaceLine` operations are
+inherited from Engine. This class explicitly opts in to document matching through
+DocumentSearchInterface, which extends the unchanged SearchTypeInterface.
 
-  since: 3.2.0
-end note
-
-note right of Basic::string
-  Search inside a string
-
-  since: 3.2.0
-  return: ?string
-end note
-
-note right of Basic::replace
-  Replace found instances inside string value
-
-  since: 3.2.0
-  return: string
-end note
-
-note right of Basic::match
-  Check if search string exists in the value
-
-  since: 3.0.9
-  return: bool
-end note
-
-note right of Basic::compileRegex
-  Compile regex pattern based on whole word and match case settings
-
-  since: 5.1.1
-  return: void
-end note
-
-@enduml
-```
+Power version: `1.1.0`. See [behavior, examples and compatibility](../../docs/search.md).
 
 The **Power** feature in JCB allows you to write PHP classes and their implementations,
 making it easy to include them in your Joomla project. JCB handles linking, autoloading,

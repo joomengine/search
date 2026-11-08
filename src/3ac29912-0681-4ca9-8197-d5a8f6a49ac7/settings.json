@@ -6,25 +6,21 @@
     "implements": null,
     "load_selection": null,
     "name": "Update",
-    "power_version": "1.0.0",
+    "power_version": "1.1.0",
     "system_name": "JCB.Search.Agent.Update",
     "type": "class",
     "use_selection": {
         "use_selection0": {
-            "use": "0a59c65c-9daf-4bc9-baf4-e063ff9e6a8a",
-            "as": "default"
-        },
-        "use_selection1": {
-            "use": "1f28cb53-60d9-4db1-b517-3c7dc6b429ef",
-            "as": "default"
-        },
-        "use_selection2": {
             "use": "01a89ba8-f8bb-435c-93de-0a8f3fa9432a",
             "as": "default"
         },
-        "use_selection3": {
+        "use_selection1": {
             "use": "117d8c9e-3f8d-40ae-b375-1efa2fe5538a",
             "as": "SearchEngine"
+        },
+        "use_selection2": {
+            "use": "33f11e5c-7055-4a7a-90ed-2f456b578674",
+            "as": "default"
         }
     },
     "extendsinterfaces": null,

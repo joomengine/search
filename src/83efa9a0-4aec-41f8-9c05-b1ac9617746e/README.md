@@ -1,56 +1,22 @@
-### JCB! Power
-# class Regex (Details)
-> namespace: **VDM\Joomla\Componentbuilder\Search\Engine**
-> extends: **Engine**
+# class Regex extends Engine implements DocumentSearchInterface
 
-```uml
-@startuml
+Namespace: **VDM\Joomla\Componentbuilder\Search\Engine**
 
-class Regex  #Gold {
-  # string $regexValue
-  + __construct(?Config $config = null)
-  + string(string $value) : ?string
-  + replace(string $value) : string
-  + match(string $value) : bool
-  # compileRegex() : void
-}
+Raw undelimited PCRE searches compile once without an extra capturing group.
+Multiline anchors use the legacy line splitter's newline conventions; dot requires
+`(?s)` to cross line breaks. An absent delimiter preserves the user's escapes.
+Invalid patterns and execution failures are explicit exceptions.
 
-note right of Regex::__construct
-  Constructor
+`__construct(?Config $config = null)` calls protected `compileRegex(): void`.
+`replacementText(): string` preserves PHP replacement expressions, while
+`replacement(array $match): string` expands captures from original offsets for a
+selected line, including captures in lookarounds outside the full match.
 
-  since: 3.2.0
-end note
+Public `match`, `string`, `lines`, `replace` and `replaceLine` are inherited.
+This class explicitly implements DocumentSearchInterface; regex whitespace rules
+are never rewritten by the literal search's `ignore_whitespace` setting.
 
-note right of Regex::string
-  Search inside a string
-
-  since: 3.2.0
-  return: ?string
-end note
-
-note right of Regex::replace
-  Replace found instances inside string value
-
-  since: 3.2.0
-  return: string
-end note
-
-note right of Regex::match
-  Math the Regular Expression
-
-  since: 3.0.9
-  return: bool
-end note
-
-note right of Regex::compileRegex
-  Compile regex pattern
-
-  since: 5.1.1
-  return: void
-end note
-
-@enduml
-```
+Power version: `1.1.0`. See [behavior, examples and compatibility](../../docs/search.md).
 
 The **Power** feature in JCB allows you to write PHP classes and their implementations,
 making it easy to include them in your Joomla project. JCB handles linking, autoloading,

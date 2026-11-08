@@ -7,6 +7,14 @@
 	protected int $bundle = 300;
 
 	/**
+	 * Last raw database ID read for each paginated table.
+	 *
+	 * @var    array
+	 * @since  1.0.1
+	 */
+	protected array $lastIds = [];
+
+	/**
 	 * Search Config
 	 *
 	 * @var    Config
@@ -133,56 +141,77 @@
 	 * @param   int           $bundle  The bundle to return (0 = all)
 	 *
 	 * @return  array|null
+	 * @throws  \UnexpectedValueException  If a raw batch cannot advance its ID cursor.
 	 * @since 3.2.0
 	 */
 	public function items(string $table = null, int $bundle = 0): ?array
 	{
-		// load the table
 		if (empty($table))
 		{
 			$table = $this->config->table_name;
 		}
 
-		// check if this is a valid table
-		if ( ($fields = $this->setDatabaseFields($table)) !== null)
+		if (($fields = $this->setDatabaseFields($table)) === null)
 		{
-			// add a key to the selection return set
-			$fields['key'] = 'id';
-			// get the title value
-			$title = $this->table->titleName($table);
-			// set order
-			$order = ['a.' . $title => 'ASC'];
-			// select all
-			$where = null;
-			// no limit
-			$limit = null;
+			return null;
+		}
 
-			// add limitation and pagination
-			if ($bundle > 0)
-			{
-				// get the incremental number
-				$where = ['a.id' => [
-						'operator' => '>=',
-						'value' => $this->next($table, $bundle)
-						]
-					];
+		$fields['key'] = 'id';
+		$paginated = $bundle > 0;
+		$order = $paginated
+			? ['a.id' => 'ASC']
+			: ['a.' . $this->table->titleName($table) => 'ASC'];
 
-				// only return a limited number
-				$limit = $this->bundle;
-			}
+		if ($bundle <= 1)
+		{
+			unset($this->lastIds[$table]);
+		}
 
-			if (($items = $this->load->items(
-				$fields,  // select
-				['a' => $table],  // tables
+		$next = $paginated ? $this->next($table, $bundle) : 1;
+
+		do
+		{
+			$where = $paginated
+				? ['a.id' => ['operator' => '>=', 'value' => $next]]
+				: null;
+			$items = $this->load->items(
+				$fields,
+				['a' => $table],
 				$where,
 				$order,
-				$limit
-			)) !== null)
+				$paginated ? $this->bundle : null
+			);
+
+			if (empty($items))
 			{
-				// return found values
-				return $this->model->items($items, $table);
+				return null;
+			}
+
+			if ($paginated)
+			{
+				// Advance before modelling: filtering must not hide later records.
+				$last = $next - 1;
+				foreach ($items as $item)
+				{
+					$last = max($last, (int) ($item->id ?? 0));
+				}
+
+				if ($last < $next)
+				{
+					throw new \UnexpectedValueException('Search pagination requires increasing record IDs.');
+				}
+
+				$this->lastIds[$table] = $last;
+				$next = $last + 1;
+			}
+
+			$items = $this->model->items($items, $table);
+			if (!empty($items))
+			{
+				return $items;
 			}
 		}
+		while ($paginated);
 
 		return null;
 	}
@@ -203,9 +232,9 @@
 			return 1;
 		}
 
-		if (($number = $this->model->last($table)) !== null)
+		if (isset($this->lastIds[$table]))
 		{
-			return $number + 1;
+			return $this->lastIds[$table] + 1;
 		}
 
 		return $this->incremental($bundle);

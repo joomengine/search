@@ -6,7 +6,7 @@
     "implements": null,
     "load_selection": null,
     "name": "Engine",
-    "power_version": "1.0.0",
+    "power_version": "1.1.0",
     "system_name": "JCB.Search.Abstraction.Engine",
     "type": "abstract class",
     "use_selection": {

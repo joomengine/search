@@ -1,5 +1,17 @@
 # JCB! Super Powers
 
+## Search engine improvements
+
+The built-in literal and regex engines search complete field values, including matches
+across line breaks. Literal search treats runs of spaces, tabs and line breaks as
+interchangeable by default; set `ignore_whitespace` to `0` for exact whitespace.
+Results retain their original starting line, and replacing a selected result preserves
+all source bytes outside the matched span.
+
+See [search behavior, usage and compatibility](docs/search.md) and
+[regression checks](tests/README.md). The original `SearchTypeInterface` remains
+supported; built-in engines explicitly implement the optional `DocumentSearchInterface`.
+
 ### What Are JCB Super Powers?
 In simple terms, **JCB Super Powers are PHP classes** — but managed entirely from the Joomla Component Builder (JCB) interface.
 
@@ -76,6 +88,7 @@ This makes your logic both **reusable** and **component-aware**, without hardcod
   - **class Regex** | [Details](src/83efa9a0-4aec-41f8-9c05-b1ac9617746e) | [Raw](src/83efa9a0-4aec-41f8-9c05-b1ac9617746e/code.power) | [Settings](src/83efa9a0-4aec-41f8-9c05-b1ac9617746e/settings.json) | SPK: `Super---83efa9a0_4aec_41f8_9c05_b1ac9617746e---Power`
 - **Namespace**: [VDM\Joomla\Componentbuilder\Search\Interfaces](#vdm-joomla-componentbuilder-search-interfaces)
 
+  - **interface DocumentSearchInterface** | [Details](src/33f11e5c-7055-4a7a-90ed-2f456b578674) | [Raw](src/33f11e5c-7055-4a7a-90ed-2f456b578674/code.power) | [Settings](src/33f11e5c-7055-4a7a-90ed-2f456b578674/settings.json) | SPK: `Super---33f11e5c_7055_4a7a_90ed_2f456b578674---Power`
   - **interface FindInterface** | [Details](src/55280ec7-e48d-431b-af25-10308dd30636) | [Raw](src/55280ec7-e48d-431b-af25-10308dd30636/code.power) | [Settings](src/55280ec7-e48d-431b-af25-10308dd30636/settings.json) | SPK: `Super---55280ec7_e48d_431b_af25_10308dd30636---Power`
   - **interface InsertInterface** | [Details](src/4c44e5d3-750c-4609-88c8-aa441838b8fe) | [Raw](src/4c44e5d3-750c-4609-88c8-aa441838b8fe/code.power) | [Settings](src/4c44e5d3-750c-4609-88c8-aa441838b8fe/settings.json) | SPK: `Super---4c44e5d3_750c_4609_88c8_aa441838b8fe---Power`
   - **interface LoadInterface** | [Details](src/2bd1a32c-3d90-4646-9314-28d44d164f76) | [Raw](src/2bd1a32c-3d90-4646-9314-28d44d164f76/code.power) | [Settings](src/2bd1a32c-3d90-4646-9314-28d44d164f76/settings.json) | SPK: `Super---2bd1a32c_3d90_4646_9314_28d44d164f76---Power`

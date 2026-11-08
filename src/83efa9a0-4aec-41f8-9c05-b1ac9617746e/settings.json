@@ -4,11 +4,11 @@
     "extends": "8f9449fc-bfbc-49a5-b146-d58c8c17dfdf",
     "guid": "83efa9a0-4aec-41f8-9c05-b1ac9617746e",
     "implements": [
-        "117d8c9e-3f8d-40ae-b375-1efa2fe5538a"
+        "33f11e5c-7055-4a7a-90ed-2f456b578674"
     ],
     "load_selection": null,
     "name": "Regex",
-    "power_version": "1.0.0",
+    "power_version": "1.1.0",
     "system_name": "JCB.Search.Engine.Regex",
     "type": "class",
     "use_selection": {

@@ -268,6 +268,8 @@ class Agent
 			$table = $this->config->table_name;
 		}
 
+		$this->find->reset($table);
+		$this->search->reset($table);
 		$set = 1;
 
 		// continue loading items until all are searched
@@ -296,6 +298,9 @@ class Agent
 			$table = $this->config->table_name;
 		}
 
+		$this->find->reset($table);
+		$this->search->reset($table);
+		$this->replace->reset($table);
 		$set = 1;
 		$replaced = 0;
 

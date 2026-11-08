@@ -113,6 +113,13 @@ class Replace implements ReplaceInterface
 			$id = $item->id;
 		}
 
+		// A repeated scan of this item replaces its previous result.
+		unset($this->updated[$table][$id]);
+		if (empty($this->updated[$table]))
+		{
+			unset($this->updated[$table]);
+		}
+
 		if (ObjectHelper::check($item))
 		{
 			foreach ($item as $field => $value)
@@ -152,7 +159,8 @@ class Replace implements ReplaceInterface
 		{
 			foreach ($items as $id => $item)
 			{
-				$this->item($item, $id, $table);
+				// Public callers may supply a list rather than an ID-keyed array.
+				$this->item($item, isset($item->id) ? (int) $item->id : (int) $id, $table);
 			}
 		}
 	}

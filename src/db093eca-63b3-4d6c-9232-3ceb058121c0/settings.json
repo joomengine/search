@@ -4,11 +4,11 @@
     "extends": "8f9449fc-bfbc-49a5-b146-d58c8c17dfdf",
     "guid": "db093eca-63b3-4d6c-9232-3ceb058121c0",
     "implements": [
-        "117d8c9e-3f8d-40ae-b375-1efa2fe5538a"
+        "33f11e5c-7055-4a7a-90ed-2f456b578674"
     ],
     "load_selection": null,
     "name": "Basic",
-    "power_version": "1.0.0",
+    "power_version": "1.1.0",
     "system_name": "JCB.Search.Engine.Basic",
     "type": "class",
     "use_selection": {

@@ -12,8 +12,7 @@
 namespace VDM\Joomla\Componentbuilder\Search\Agent;
 
 
-use VDM\Joomla\Utilities\ArrayHelper;
-use VDM\Joomla\Utilities\StringHelper;
+use VDM\Joomla\Componentbuilder\Search\Interfaces\DocumentSearchInterface;
 use VDM\Joomla\Componentbuilder\Search\Factory;
 use VDM\Joomla\Componentbuilder\Search\Config;
 use VDM\Joomla\Componentbuilder\Search\Interfaces\SearchTypeInterface as SearchEngine;
@@ -28,35 +27,22 @@ use VDM\Joomla\Componentbuilder\Search\Interfaces\SearchInterface;
 class Search implements SearchInterface
 {
 	/**
-	 * Search results found
+	 * Results indexed by table, item, field and starting line/path.
 	 *
-	 * @var    array
+	 * @var array
 	 * @since 3.2.0
 	 */
 	protected array $found = [];
 
-	/**
-	 * Search Config
-	 *
-	 * @var    Config
-	 * @since 3.2.0
-	 */
+	/** @var Config Search configuration. @since 3.2.0 */
 	protected Config $config;
 
-	/**
-	 * Search Engine
-	 *
-	 * @var    SearchEngine
-	 * @since 3.2.0
-	 */
+	/** @var SearchEngine Search implementation. @since 3.2.0 */
 	protected SearchEngine $search;
 
 	/**
-	 * Constructor
-	 *
-	 * @param Config|null                 $config       The search config object.
-	 * @param SearchEngine|null      $search    The search engine object.
-	 *
+	 * @param Config|null       $config Search configuration.
+	 * @param SearchEngine|null $search Search implementation.
 	 * @since 3.2.0
 	 */
 	public function __construct(?Config $config = null, ?SearchEngine $search = null)
@@ -66,65 +52,59 @@ class Search implements SearchInterface
 	}
 
 	/**
-	 * Get found values
+	 * Get the results for a table.
 	 *
-	 * @param string     $table   The table being searched
-	 *
-	 * @return  array|null
+	 * @param string $table Table name.
+	 * @return array|null
 	 * @since 3.2.0
 	 */
 	public function get(string $table): ?array
 	{
-		if (isset($this->found[$table]))
-		{
-			return $this->found[$table];
-		}
-
-		return null;
+		return $this->found[$table] ?? null;
 	}
 
 	/**
-	 * Search inside a value
+	 * Search a field, replacing any earlier results for this field.
 	 *
-	 * @param   mixed         $value     The field value
-	 * @param   int           $id        The item ID
-	 * @param   string        $field     The field key
-	 * @param   string        $table     The table
-	 *
-	 * @return  bool
+	 * @param mixed  $value Field value.
+	 * @param int    $id    Item ID.
+	 * @param string $field Field key.
+	 * @param string $table Table name.
+	 * @return bool
 	 * @since 3.2.0
 	 */
 	public function value($value, int $id, string $field, string $table): bool
 	{
-		// search the mixed value
 		$found = $this->searchValue($value);
 
-		// check if we found any match
-		if (ArrayHelper::check($found))
+		if ($found !== null)
 		{
-			foreach ($found as $line => $line_value)
-			{
-				// may not be needed... but being old school
-				$this->prep($id, $field, $table);
+			$this->prep($id, $field, $table);
+			$this->found[$table][$id][$field] = $found;
 
-				// load the detail into our multidimensional array... lol
-				// Table->Item_id->Field_name->Line_number = marked_full_line
-				// Search Example: soon...
-				// Marked Line Example: Soon....
-				$this->found[$table][$id][$field][$line] = $line_value;
-			}
 			return true;
+		}
+
+		unset($this->found[$table][$id][$field]);
+
+		if (empty($this->found[$table][$id]))
+		{
+			unset($this->found[$table][$id]);
+		}
+
+		if (empty($this->found[$table]))
+		{
+			unset($this->found[$table]);
 		}
 
 		return false;
 	}
 
 	/**
-	 * Empty the found values
+	 * Clear the results for a table.
 	 *
-	 * @param string   $table   The table being searched
-	 *
-	 * @return  void
+	 * @param string $table Table name.
+	 * @return void
 	 * @since 3.2.0
 	 */
 	public function reset(string $table)
@@ -133,169 +113,129 @@ class Search implements SearchInterface
 	}
 
 	/**
-	 * Search inside a string
+	 * Clear one item's results before rescanning its current fields.
 	 *
-	 * @param   mixed    $value    The field value
+	 * This also removes results for fields no longer present on the item,
+	 * while preserving other items in the same table.
 	 *
-	 * @return  array|null
+	 * @param int    $id    Item ID.
+	 * @param string $table Table name.
+	 * @return void
+	 * @since 1.1.0
+	 */
+	public function resetItem(int $id, string $table): void
+	{
+		unset($this->found[$table][$id]);
+
+		if (empty($this->found[$table]))
+		{
+			unset($this->found[$table]);
+		}
+	}
+
+	/**
+	 * Search string leaves recursively without joining separate values.
+	 *
+	 * Result keys retain the existing dot-separated path and line format.
+	 * Literal dots and backslashes in array keys are escaped reversibly.
+	 *
+	 * @param mixed $value Field value.
+	 * @return array|null
 	 * @since 3.2.0
 	 */
 	protected function searchValue($value): ?array
 	{
-		// check if this is an array
-		$found = null;
-
-		// I know this is a little crazy... TODO refactor into recursion functions
-		// the possibility of searching sub-forms in sub-forms
-		if (ArrayHelper::check($value))
+		if (is_string($value))
 		{
-			// first layer
-			foreach ($value as $keys => $rows)
-			{
-				if (ArrayHelper::check($rows))
-				{
-					// second layer
-					foreach ($rows as $key => $row)
-					{
-						if (ArrayHelper::check($row))
-						{
-							// third layer
-							foreach ($row as $ke => $ro)
-							{
-								if (ArrayHelper::check($ro))
-								{
-									// forth layer
-									foreach ($ro as $k => $r)
-									{
-										if (StringHelper::check($r) && ($_found = $this->string($r)) !== null)
-										{
-											foreach ($_found as $_n => $_f)
-											{
-												$found[$keys . '.' . $key . '.' . $ke . '.' . $k . '.' . $_n] = $_f;
-											}
-										}
-									}
-								}
-								elseif (StringHelper::check($ro) && ($_found = $this->string($ro)) !== null)
-								{
-									foreach ($_found as $_n => $_f)
-									{
-										$found[$keys. '.' . $key . '.' . $ke . '.' . $_n] = $_f;
-									}
-								}
+			return $value !== '' ? $this->string($value) : null;
+		}
 
-							}
-						}
-						elseif (StringHelper::check($row) && ($_found = $this->string($row)) !== null)
-						{
-							foreach ($_found as $_n => $_f)
-							{
-								$found[$keys. '.' . $key . '.' . $_n] = $_f;
-							}
-						}
-					}
-				}
-				elseif (StringHelper::check($rows) && ($_found = $this->string($rows)) !== null)
-				{
-					foreach ($_found as $_n => $_f)
-					{
-						$found[$keys. '.' . $_n] = $_f;
-					}
-				}
+		if (!is_array($value))
+		{
+			return null;
+		}
+
+		$found = [];
+
+		foreach ($value as $key => $child)
+		{
+			$matches = $this->searchValue($child);
+
+			if ($matches === null)
+			{
+				continue;
+			}
+
+			$prefix = str_replace(['\\', '.'], ['\\\\', '\\.'], (string) $key);
+
+			foreach ($matches as $line => $match)
+			{
+				$found[$prefix . '.' . $line] = $match;
 			}
 		}
-		elseif (StringHelper::check($value))
-		{
-			$found = $this->string($value);
-		}
 
-		return $found;
+		return $found !== [] ? $found : null;
 	}
 
 	/**
-	 * Search inside a string
+	 * Search a complete string when the engine supports document matching.
 	 *
-	 * @param   string   $value     The field value
+	 * Legacy engines retain their per-line behaviour. Result keys are the
+	 * original, one-based starting lines, including for multiline matches.
 	 *
-	 * @return  array|null
+	 * @param string $value Field value.
+	 * @return array|null
 	 * @since 3.2.0
 	 */
 	protected function string(string $value): ?array
 	{
-		// line counter
-		$line = 1;
-
-		// we count every field we search
 		$this->fieldCounter();
 
-		// check if string has a new line
-		if (\preg_match('/\R/', $value))
+		if ($this->search instanceof DocumentSearchInterface)
 		{
-			$search_array = \preg_split('/\R/', $value);
-
-			// start search bucket
-			$found = [];
-
-			// loop over the lines
-			foreach ($search_array as $line_value)
-			{
-				if (($_found = $this->search->string($line_value)) !== null)
-				{
-					$found[$line] = $_found;
-				}
-
-				// next line
-				$line++;
-			}
-
-			if (ArrayHelper::check($found))
-			{
-				return $found;
-			}
-		}
-		elseif (($found = $this->search->string($value)) !== null)
-		{
-			return [$line => $found];
+			return $this->search->lines($value);
 		}
 
-		return null;
+		$found = [];
+
+		foreach (preg_split('/\R/', $value) as $index => $line)
+		{
+			$match = $this->search->string($line);
+
+			if ($match !== null)
+			{
+				$found[$index + 1] = $match;
+			}
+		}
+
+		return $found !== [] ? $found : null;
 	}
 
 	/**
-	 * Prep the bucket
+	 * Prepare the result bucket.
 	 *
-	 * @param   int        $id       The item ID
-	 * @param   string     $field    The field key
-	 * @param   string     $table    The table
-	 *
-	 * @return  void
+	 * @param int    $id    Item ID.
+	 * @param string $field Field key.
+	 * @param string $table Table name.
+	 * @return void
 	 * @since 3.2.0
 	 */
 	protected function prep(int $id, string $field, string $table)
 	{
-		if (empty($this->found[$table]))
-		{
-			$this->found[$table] = [];
-		}
-		if (empty($this->found[$table][$id]))
-		{
-			$this->found[$table][$id] = [];
-		}
-		if (empty($this->found[$table][$id][$field]))
+		if (!isset($this->found[$table][$id][$field]))
 		{
 			$this->found[$table][$id][$field] = [];
 		}
-		// we should add a call to get the item name if the table has a name field TODO
 	}
 
 	/**
-	 * we count every field being searched
+	 * Count each string field searched once.
 	 *
+	 * @return void
 	 * @since 3.2.0
 	 */
 	protected function fieldCounter()
 	{
-		// we count every field we search
 		$this->config->field_counter += 1;
 	}
 }

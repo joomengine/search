@@ -3,6 +3,8 @@
 > namespace: **VDM\Joomla\Componentbuilder\Search\Model**
 > extends: **Model**
 
+The validation path imports the shared StringHelper Power through settings.json as well as the PHP preview, so inherited model operations resolve the helper correctly.
+
 ```uml
 @startuml
 

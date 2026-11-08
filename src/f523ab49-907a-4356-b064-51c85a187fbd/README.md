@@ -3,6 +3,8 @@
 > namespace: **VDM\Joomla\Componentbuilder\Search\Model**
 > extends: **Model**
 
+Positive integer primary keys are retained alongside searchable strings and arrays. This preserves records with only one searchable field when the database driver returns IDs as integers; ordinary numeric fields remain excluded from text search.
+
 ```uml
 @startuml
 

@@ -2,6 +2,8 @@
 # class Find (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Agent**
 
+Items supplied as a list use each object's record ID. Rechecking an item clears both its saved values and detailed Search results before collecting its current matches, including results for fields removed since the previous scan.
+
 ```uml
 @startuml
 

@@ -12,8 +12,7 @@
 namespace VDM\Joomla\Componentbuilder\Search\Agent;
 
 
-use VDM\Joomla\Utilities\ArrayHelper;
-use VDM\Joomla\Utilities\StringHelper;
+use VDM\Joomla\Componentbuilder\Search\Interfaces\DocumentSearchInterface;
 use VDM\Joomla\Componentbuilder\Search\Factory;
 use VDM\Joomla\Componentbuilder\Search\Interfaces\SearchTypeInterface as SearchEngine;
 
@@ -25,19 +24,11 @@ use VDM\Joomla\Componentbuilder\Search\Interfaces\SearchTypeInterface as SearchE
  */
 class Update
 {
-	/**
-	 * Search Engine
-	 *
-	 * @var    SearchEngine
-	 * @since 3.2.0
-	 */
+	/** @var SearchEngine Search implementation. @since 3.2.0 */
 	protected SearchEngine $search;
 
 	/**
-	 * Constructor
-	 *
-	 * @param SearchEngine|null    $search    The search engine object.
-	 *
+	 * @param SearchEngine|null $search Search implementation.
 	 * @since 3.2.0
 	 */
 	public function __construct(?SearchEngine $search = null)
@@ -46,191 +37,255 @@ class Update
 	}
 
 	/**
-	 * Update the value
+	 * Update a field or a selected starting line/path.
 	 *
-	 * @param   mixed    $value    The field value
-	 * @param   mixed    $line     The line to update  (0 = all)
-	 *
-	 * @return  mixed
+	 * @param mixed $value Field value.
+	 * @param mixed $line  Starting line or escaped array path (0/null = all).
+	 * @return mixed Updated value, or null when unchanged.
 	 * @since 3.2.0
 	 */
 	public function value($value, $line = 0)
 	{
-		// update the value
 		$update = $this->updateValue($value, $line);
 
-		// was anything updated
-		if ($value === $update)
-		{
-			return null;
-		}
-
-		return $update;
+		return $value === $update ? null : $update;
 	}
 
 	/**
-	 * Update all search-replace instances inside a value
+	 * Replace matches recursively, or descend only into the selected path.
 	 *
-	 * @param   mixed    $value   The field value
-	 * @param   mixed    $line    The line to update  (0 = all)
-	 *
-	 * @return  mixed
+	 * @param mixed $value Field value.
+	 * @param mixed $line  Starting line or escaped array path (0/null = all).
+	 * @return mixed
 	 * @since 3.2.0
 	 */
 	protected function updateValue($value, $line = 0)
 	{
-		// I know this is a little crazy... TODO refactor into recursion functions
-		// the possibility of updating sub-forms in sub-forms
-		if (ArrayHelper::check($value))
-		{
-			if (strpos((string) $line, '.') !== false)
-			{
-				$line = explode('.', (string) $line);
-			}
-			// first layer
-			foreach ($value as $keys => &$rows)
-			{
-				if (ArrayHelper::check($rows))
-				{
-					// second layer
-					foreach ($rows as $key => &$row)
-					{
-						if (ArrayHelper::check($row))
-						{
-							// third layer
-							foreach ($row as $ke => &$ro)
-							{
-								if (ArrayHelper::check($ro))
-								{
-									// forth layer
-									foreach ($ro as $k => &$r)
-									{
-										if (StringHelper::check($r) &&
-											$this->validateUpdateKey($line, $keys, $key, $ke, $k))
-										{
-											$_line = (isset($line[4])) ? $line[4] : 0;
-												$r = $this->string($r, $_line);
-										}
-									}
-								}
-								elseif (StringHelper::check($ro) &&
-									$this->validateUpdateKey($line, $keys, $key, $ke))
-								{
-									$_line = (isset($line[3])) ? $line[3] : 0;
-									$ro = $this->string($ro, $_line);
-								}
+		$target = $this->parseTarget($line);
 
-							}
-						}
-						elseif (StringHelper::check($row) &&
-							$this->validateUpdateKey($line, $keys, $key))
-						{
-							$_line = (isset($line[2])) ? $line[2] : 0;
-							$row  = $this->string($row, $_line);
-						}
-					}
-				}
-				elseif (StringHelper::check($rows) &&
-					$this->validateUpdateKey($line, $keys))
+		if ($target === null)
+		{
+			return $value;
+		}
+
+		$selection = $target['path'] === [] ? $target['line']
+			: array_merge($target['path'], [(string) $target['line']]);
+
+		return $this->updateAtPath($value, $target['path'], $target['line'], [], $selection);
+	}
+
+	/**
+	 * Decode a target without allowing malformed targets to replace all.
+	 *
+	 * Dots separate array keys; \\. and \\\\ encode literal dots and
+	 * backslashes. The final segment is the one-based line (0 = all).
+	 *
+	 * @param mixed $line Target supplied by the caller.
+	 * @return array|null
+	 */
+	protected function parseTarget($line): ?array
+	{
+		if ($line === null)
+		{
+			$line = 0;
+		}
+
+		if (is_int($line))
+		{
+			return $line >= 0 ? ['path' => [], 'line' => $line] : null;
+		}
+
+		if (is_array($line))
+		{
+			$parts = array_values($line);
+
+			foreach ($parts as &$part)
+			{
+				if (!is_string($part) && !is_int($part))
 				{
-					$_line = (isset($line[1])) ? $line[1] : 0;
-					$rows = $this->string($rows, $_line);
+					return null;
+				}
+
+				$part = (string) $part;
+			}
+			unset($part);
+		}
+		elseif (is_string($line))
+		{
+			$parts = [''];
+			$part = 0;
+			$length = strlen($line);
+
+			for ($index = 0; $index < $length; $index++)
+			{
+				$character = $line[$index];
+
+				if ($character === '\\' && $index + 1 < $length
+					&& ($line[$index + 1] === '.' || $line[$index + 1] === '\\'))
+				{
+					$parts[$part] .= $line[++$index];
+				}
+				elseif ($character === '.')
+				{
+					$parts[++$part] = '';
+				}
+				else
+				{
+					$parts[$part] .= $character;
 				}
 			}
 		}
-		elseif (StringHelper::check($value))
+		else
 		{
-			$value = $this->string($value, $line);
+			return null;
+		}
+
+		$number = array_pop($parts);
+
+		if ($number === null || preg_match('/^[0-9]+$/D', $number) !== 1)
+		{
+			return null;
+		}
+
+		return ['path' => $parts, 'line' => (int) $number];
+	}
+
+	/**
+	 * Follow exact array keys before replacing the selected string leaves.
+	 *
+	 * @param mixed $value     Field value.
+	 * @param array $path      Decoded remaining keys.
+	 * @param int   $line      Starting line (0 = all).
+	 * @param array $keys      Actual ancestor keys for the legacy filter hook.
+	 * @param mixed $selection Decoded target or unqualified line number.
+	 * @return mixed
+	 */
+	protected function updateAtPath($value, array $path, int $line, array $keys = [], $selection = 0)
+	{
+		if ($path !== [])
+		{
+			$key = array_shift($path);
+
+			if (is_array($value) && array_key_exists($key, $value))
+			{
+				// A selected path identifies one leaf, never an entire subtree.
+				if ($path === [] && !is_string($value[$key]))
+				{
+					return $value;
+				}
+
+				// Match PHP's actual array-key conversion for numeric string keys.
+				$keys[] = array_key_first([$key => true]);
+				$value[$key] = $this->updateAtPath($value[$key], $path, $line, $keys, $selection);
+			}
+
+			return $value;
+		}
+
+		if (is_array($value))
+		{
+			foreach ($value as $key => $child)
+			{
+				$value[$key] = $this->updateAtPath($child, [], $line,
+					array_merge($keys, [$key]), $selection);
+			}
+		}
+		elseif (is_string($value) && $value !== '')
+		{
+			// Existing subclasses may exclude individual subform keys. Keep
+			// this hook for every nested leaf, including targeted replacements.
+			if ($keys === [] || $this->validateUpdateKey($selection,
+				$keys[0] ?? null, $keys[1] ?? null, $keys[2] ?? null, $keys[3] ?? null))
+			{
+				$value = $this->string($value, $line);
+			}
 		}
 
 		return $value;
 	}
 
 	/**
-	 * Check if the keys are valid for search when working with arrays
+	 * Filter nested leaves through the legacy subclass hook.
 	 *
-	 * @param   int            $line     The lines array
-	 * @param   mixed      $keys   The line keys
-	 * @param   mixed      $key     The line key
-	 * @param   mixed      $k        The line ke
-	 * @param   mixed      $k        The line k
+	 * The four key arguments retain the original hook contract. Deeper paths
+	 * have already been selected exactly by updateAtPath; this hook compares
+	 * the available prefix and lets subclasses apply their existing key filters.
 	 *
-	 * @return  bool
+	 * @param mixed $line Decoded path followed by its line number.
+	 * @param mixed $keys First key.
+	 * @param mixed $key  Second key.
+	 * @param mixed $ke   Third key.
+	 * @param mixed $k    Fourth key.
+	 * @return bool
 	 * @since 3.2.0
 	 */
 	protected function validateUpdateKey($line, $keys = null, $key = null, $ke = null, $k = null): bool
 	{
-		if (ArrayHelper::check($line))
+		$target = $this->parseTarget($line);
+
+		if ($target === null)
 		{
-			$_keys = (isset($line[0])) ? $line[0] : null;
-			$_key = (isset($line[1])) ? $line[1] : null;
-			$_ke = (isset($line[2])) ? $line[2] : null;
-			$_k = (isset($line[3])) ? $line[3] : null;
+			return false;
+		}
 
-			if ($keys && $_keys && $_keys !== $keys)
-			{
-				return false;
-			}
+		if ($target['path'] === [])
+		{
+			return true;
+		}
 
-			if ($key && $_key && $_key !== $key)
-			{
-				return false;
-			}
+		$path = [];
 
-			if ($ke && $_ke && $_ke !== $ke)
+		foreach ([$keys, $key, $ke, $k] as $segment)
+		{
+			if ($segment !== null)
 			{
-				return false;
-			}
-
-			if ($k && $_k && $_k !== $k)
-			{
-				return false;
+				$path[] = (string) $segment;
 			}
 		}
 
-		return true;
+		return array_slice($target['path'], 0, 4) === $path;
 	}
 
 	/**
-	 * Update all search-replace instances inside a string
+	 * Replace complete matches beginning on the selected original line.
 	 *
-	 * @param   string    $value   The field value
-	 * @param   int       $line    The line to update  (0 = all)
+	 * Legacy engines receive one line at a time for targeted replacement;
+	 * original CRLF, CR, LF and other line separators remain untouched.
 	 *
-	 * @return  string
+	 * @param string $value Field value.
+	 * @param int    $line  Starting line (0 = all).
+	 * @return string
 	 * @since 3.2.0
 	 */
 	protected function string(string $value, int $line = 0): string
 	{
-		// check if string has a new line
-		if (\preg_match('/\R/', $value) && $line > 0)
+		if ($line < 0)
 		{
-			// line counter
-			$line_number = 1;
-
-			$search_array = \preg_split('/\R/', $value);
-
-			// loop over the lines
-			foreach ($search_array as $nr => $line_value)
-			{
-				if ($line_number == $line)
-				{
-					$search_array[$nr] = $this->search->replace($line_value);
-
-					// since we are targeting on line (and possibly one number)
-					// this can only happen once, and so we return at this point
-					return implode(PHP_EOL, $search_array);
-				}
-				// next line
-				$line_number++;
-			}
-
-			// no update took place so we just return the original value
 			return $value;
 		}
 
-		return $this->search->replace($value);
-	}
+		if ($line === 0)
+		{
+			return $this->search->replace($value);
+		}
 
+		if ($this->search instanceof DocumentSearchInterface)
+		{
+			return $this->search->replaceLine($value, $line);
+		}
+
+		$parts = preg_split('/(\R)/', $value, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+		// Test the range before multiplying to avoid overflowing on invalid input.
+		if ($line > intdiv(count($parts) + 1, 2))
+		{
+			return $value;
+		}
+
+		$index = ($line - 1) * 2;
+		$parts[$index] = $this->search->replace($parts[$index]);
+
+		return implode('', $parts);
+	}
 }
 

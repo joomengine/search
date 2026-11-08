@@ -130,6 +130,13 @@ class Load extends Model implements ModelInterface
 		//    and while I agree it needs fixing, it will not take a few hours... but days
 		// End note to self
 
+		// Database drivers can return the primary key as an integer.
+		// Keep it alongside searchable values so the base model retains the row.
+		if ($field === 'id' && is_int($value) && $value > 0)
+		{
+			return true;
+		}
+
 		// check values
 		if (StringHelper::check($value) || ArrayHelper::check($value, true))
 		{

@@ -2,6 +2,8 @@
 # class Replace (Details)
 > namespace: **VDM\Joomla\Componentbuilder\Search\Agent**
 
+Items supplied as a list use each object's record ID. Rechecking an item clears its previously prepared updates, preventing unchanged fields from retaining stale replacements.
+
 ```uml
 @startuml
 
